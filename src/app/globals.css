@@ -48,7 +48,7 @@ body {
   position: absolute;
   left: 0; right: 0; bottom: -2px;
   height: 6px;
-  background: var(--rose);
+  background: #708238;
   border-radius: 999px;
   opacity: 0.85;
   transform: skewY(-1deg);
