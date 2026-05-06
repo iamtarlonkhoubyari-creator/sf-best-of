@@ -45,7 +45,7 @@ export default function Home() {
         <div className="flex items-start justify-between gap-6 flex-wrap">
           <h1 className="font-display text-4xl sm:text-6xl leading-[1] font-semibold">
             <span className="accent-underline">best of SF</span>{" "}
-            <span className="italic text-[var(--rose)] font-normal">
+            <span className="italic font-normal" style={{ color: "#708238" }}>
               (tarlon&rsquo;s version)
             </span>
           </h1>
