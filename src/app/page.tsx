@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { CATEGORIES, type CategoryId, type Place } from "@/data/places";
+import BridgeIcon from "@/components/BridgeIcon";
 
 // Leaflet uses window — load only on the client.
 const Map = dynamic(() => import("@/components/Map"), {
@@ -39,7 +40,8 @@ export default function Home() {
   return (
     <main className="relative flex flex-col flex-1 min-h-screen">
       {/* Header */}
-      <header className="px-4 pt-6 pb-4 sm:px-8 sm:pt-8 z-[1000]">
+      <header className="px-4 pt-5 pb-4 sm:px-8 sm:pt-7 z-[1000]">
+        <BridgeIcon className="w-44 sm:w-56 h-auto -mb-2 -ml-1 -rotate-1" />
         <div className="flex items-start justify-between gap-6 flex-wrap">
           <h1 className="font-display text-4xl sm:text-6xl leading-[1] font-semibold">
             <span className="accent-underline">best of SF</span>{" "}
