@@ -16,13 +16,22 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "the best of SF — Tarlon's version",
+  metadataBase: new URL("https://sfbestof.com"),
+  title: "best of SF (tarlon's version)",
   description:
-    "a living, breathing map of my favorite places in San Francisco — bars, dinners, places to crash out, places to cry, all of it.",
+    "A curated map of my favorite places in San Francisco — bars, private dining, cappuccinos, places to cry, and more.",
   openGraph: {
-    title: "the best of SF — Tarlon's version",
-    description: "a living map of my favorite places in San Francisco.",
+    title: "best of SF (tarlon's version)",
+    description: "A curated map of my favorite places in San Francisco.",
     type: "website",
+    url: "https://sfbestof.com",
+    siteName: "best of SF",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "best of SF (tarlon's version)",
+    description: "A curated map of my favorite places in San Francisco.",
+    creator: "@TarlonKhoubyari",
   },
 };
 
