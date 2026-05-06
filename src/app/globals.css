@@ -17,8 +17,8 @@
 @theme inline {
   --color-background: var(--bg);
   --color-foreground: var(--ink);
-  --font-sans: var(--font-quicksand);
-  --font-display: var(--font-caveat);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-fraunces);
 }
 
 html, body {
@@ -28,21 +28,31 @@ html, body {
 }
 
 body {
-  font-family: var(--font-quicksand), system-ui, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
   -webkit-tap-highlight-color: transparent;
 }
 
 .font-display {
-  font-family: var(--font-caveat), cursive;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-feature-settings: "ss01" on, "ss02" on;
+  letter-spacing: -0.02em;
 }
 
-/* squiggly underline used for headings */
-.squiggle {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 8'><path d='M0 4 Q 10 0 20 4 T 40 4 T 60 4 T 80 4' fill='none' stroke='%23E94B6A' stroke-width='2'/></svg>");
-  background-repeat: repeat-x;
-  background-position: bottom left;
-  background-size: 80px 8px;
-  padding-bottom: 6px;
+/* a thin rose underline accent on the title */
+.accent-underline {
+  position: relative;
+  display: inline-block;
+}
+.accent-underline::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -2px;
+  height: 6px;
+  background: var(--rose);
+  border-radius: 999px;
+  opacity: 0.85;
+  transform: skewY(-1deg);
+  z-index: -1;
 }
 
 /* Leaflet UI tweaks */

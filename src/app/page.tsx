@@ -14,8 +14,8 @@ const Map = dynamic(() => import("@/components/Map"), {
   ),
 });
 
-const X_HANDLE = "tarlonkhoubyari";   // TODO: confirm handle
-const LINKEDIN_HANDLE = "tarlonkhoubyari"; // TODO: confirm handle
+const X_URL = "https://x.com/TarlonKhoubyari";
+const LINKEDIN_URL = "https://www.linkedin.com/in/tarlon-khoubyari/";
 
 export default function Home() {
   const [active, setActive] = useState<Set<CategoryId>>(
@@ -39,19 +39,19 @@ export default function Home() {
   return (
     <main className="relative flex flex-col flex-1 min-h-screen">
       {/* Header */}
-      <header className="px-4 pt-5 pb-3 sm:px-8 sm:pt-7 z-[1000]">
-        <div className="flex items-end justify-between gap-3 flex-wrap">
+      <header className="px-4 pt-6 pb-4 sm:px-8 sm:pt-8 z-[1000]">
+        <div className="flex items-end justify-between gap-4 flex-wrap">
           <div>
-            <h1 className="font-display text-4xl sm:text-6xl leading-none">
-              <span className="squiggle">the best of SF</span>
+            <h1 className="font-display text-5xl sm:text-7xl leading-[0.95] font-semibold">
+              The Best of <span className="accent-underline">SF</span>
             </h1>
-            <p className="font-display text-2xl sm:text-3xl text-[var(--rose)] -mt-1">
-              Tarlon&apos;s version
+            <p className="font-display italic text-2xl sm:text-3xl text-[var(--rose)] mt-1">
+              Tarlon&rsquo;s version
             </p>
           </div>
-          <p className="text-xs sm:text-sm opacity-70 max-w-xs">
-            a living, breathing map of my favorite places. tap a pin. share the
-            link. yell at me on X if i missed one.
+          <p className="text-sm opacity-70 max-w-sm leading-relaxed">
+            A curated map of my favorite places in San Francisco. Tap any pin.
+            Share the link. Updated whenever I find something new.
           </p>
         </div>
       </header>
@@ -91,27 +91,27 @@ export default function Home() {
       {/* Tiny footer */}
       <footer className="px-4 sm:px-8 pb-4 text-xs opacity-60 flex items-center justify-between flex-wrap gap-2">
         <span>
-          made with 🥐 in SF · find me on{" "}
+          By Tarlon Khoubyari ·{" "}
           <a
-            className="underline decoration-[var(--rose)]"
+            className="underline decoration-[var(--rose)] underline-offset-2"
             target="_blank"
             rel="noreferrer"
-            href={`https://x.com/${X_HANDLE}`}
+            href={X_URL}
           >
             X
           </a>{" "}
           ·{" "}
           <a
-            className="underline decoration-[var(--ocean)]"
+            className="underline decoration-[var(--ocean)] underline-offset-2"
             target="_blank"
             rel="noreferrer"
-            href={`https://linkedin.com/in/${LINKEDIN_HANDLE}`}
+            href={LINKEDIN_URL}
           >
             LinkedIn
           </a>
         </span>
-        <span className="font-display text-base">
-          {CATEGORIES.length} categories · always growing 🌱
+        <span className="font-display italic">
+          {CATEGORIES.length} categories, always growing.
         </span>
       </footer>
     </main>
@@ -171,7 +171,7 @@ function DetailSheet({
         <div className="flex items-start justify-between gap-3">
           <div>
             <div className="text-xs uppercase tracking-wider opacity-60">
-              {cat.emoji} {cat.label}
+              {cat.emoji} {cat.longLabel}
             </div>
             <h2 className="font-display text-3xl leading-tight mt-1">
               {place.name}
@@ -206,7 +206,7 @@ function Socials() {
   return (
     <div className="absolute right-3 bottom-3 z-[1000] flex gap-2">
       <a
-        href={`https://x.com/${X_HANDLE}`}
+        href={X_URL}
         target="_blank"
         rel="noreferrer"
         aria-label="X"
@@ -217,7 +217,7 @@ function Socials() {
         </svg>
       </a>
       <a
-        href={`https://linkedin.com/in/${LINKEDIN_HANDLE}`}
+        href={LINKEDIN_URL}
         target="_blank"
         rel="noreferrer"
         aria-label="LinkedIn"

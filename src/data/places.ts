@@ -8,54 +8,54 @@ export type CategoryId =
 
 export type Category = {
   id: CategoryId;
-  label: string;
+  label: string;       // short — used in chips
+  longLabel: string;   // shown in popups/detail
   emoji: string;
-  color: string;     // pin color
-  blurb: string;     // shown when filter active
+  color: string;       // pin color
 };
 
 export const CATEGORIES: Category[] = [
   {
     id: "bars",
-    label: "best cocktail / wine bars",
+    label: "Bars",
+    longLabel: "Cocktail & wine bars",
     emoji: "🍸",
     color: "#E94B6A",
-    blurb: "places to drink something pretty",
   },
   {
     id: "crash",
-    label: "places to crash out",
+    label: "Crash out",
+    longLabel: "Places to crash out",
     emoji: "😩",
     color: "#9B7EDC",
-    blurb: "for when Anthropic crushed your startup",
   },
   {
     id: "cappuccinos",
-    label: "best cappuccinos",
+    label: "Cappuccinos",
+    longLabel: "Best cappuccinos",
     emoji: "☕",
     color: "#B5713A",
-    blurb: "the daily ritual",
   },
   {
     id: "cry",
-    label: "best places to cry",
+    label: "Cry",
+    longLabel: "Places to cry",
     emoji: "😢",
     color: "#4A90E2",
-    blurb: "highly recommend a good cry outdoors",
   },
   {
     id: "dinner",
-    label: "places to host a dinner",
+    label: "Dinner",
+    longLabel: "Places to host a dinner",
     emoji: "🍽️",
     color: "#5FA86F",
-    blurb: "when you want to be the host with the most",
   },
   {
     id: "breakup",
-    label: "where to break up with your cofounder",
+    label: "Breakups",
+    longLabel: "Where to break up with your cofounder",
     emoji: "💔",
     color: "#D26B8E",
-    blurb: "no easy way to do this",
   },
 ];
 
@@ -75,8 +75,9 @@ export const PLACES: Place[] = [
   // ───────── BARS ─────────
   { id: "bar-crenn",     name: "Bar Crenn",        category: "bars", lat: 37.7984, lng: -122.4368, note: "3131 Fillmore" },
   { id: "bar-sprez",     name: "Bar Sprez",        category: "bars", lat: 37.7770, lng: -122.4258, note: "Hayes Valley", needsReview: true },
-  { id: "ama",           name: "Ama",              category: "bars", lat: 37.7977, lng: -122.4081, note: "North Beach" },
   { id: "bar-bibi",      name: "Bar Bibi",         category: "bars", lat: 37.7882, lng: -122.4054, note: "27 Maiden Lane" },
+  { id: "verjus",        name: "Verjus",           category: "bars", lat: 37.7960, lng: -122.4033, note: "528 Washington — wine bar" },
+  { id: "anina",         name: "Anina",            category: "bars", lat: 37.7766, lng: -122.4258, note: "Hayes Valley cocktails" },
   { id: "geelou",        name: "Geelou",           category: "bars", lat: 37.7826, lng: -122.4192, needsReview: true },
   { id: "waystone",      name: "Waystone",         category: "bars", lat: 37.7521, lng: -122.4327, note: "Noe Valley" },
   { id: "key-klub",      name: "Key Klub",         category: "bars", lat: 37.7918, lng: -122.4216, note: "Polk St" },
@@ -128,6 +129,7 @@ export const PLACES: Place[] = [
   { id: "piccino",        name: "Piccino",          category: "dinner", lat: 37.7569, lng: -122.3924, note: "Dogpatch" },
   { id: "dalida",         name: "Dalida",           category: "dinner", lat: 37.7995, lng: -122.4576, note: "Presidio" },
   { id: "park-tavern",    name: "Park Tavern",      category: "dinner", lat: 37.8005, lng: -122.4099 },
+  { id: "saison",         name: "Saison",           category: "dinner", lat: 37.7848, lng: -122.3933, note: "178 Townsend — tasting menu" },
 
   // ───────── BREAKUP ─────────
   { id: "south-park",      name: "South Park",       category: "breakup", lat: 37.7811, lng: -122.3934 },

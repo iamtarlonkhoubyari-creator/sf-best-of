@@ -69,7 +69,7 @@ export default function Map({ active, onSelect }: Props) {
             <Popup>
               <div className="text-[var(--ink)]">
                 <div className="text-xs uppercase tracking-wider opacity-60">
-                  {cat.emoji} {cat.label}
+                  {cat.emoji} {cat.longLabel}
                 </div>
                 <div className="font-semibold text-base">{p.name}</div>
                 {p.note && <div className="text-sm opacity-80">{p.note}</div>}
