@@ -42,31 +42,27 @@ export default function Home() {
       {/* Header */}
       <header className="px-4 pt-5 pb-4 sm:px-8 sm:pt-7 z-[1000]">
         <BridgeIcon className="w-44 sm:w-56 h-auto -mb-2 -ml-1 -rotate-1" />
-        <div className="flex items-start justify-between gap-6 flex-wrap">
-          <h1 className="font-display text-4xl sm:text-6xl leading-[1] font-semibold">
-            <span className="accent-underline">best of SF</span>{" "}
-            <span className="italic font-normal" style={{ color: "#708238" }}>
-              (tarlon&rsquo;s version)
-            </span>
-          </h1>
-          <div className="max-w-sm">
-            <p className="text-sm opacity-70 leading-relaxed">
-              A curated map of my favorite places in San Francisco. Tap any
-              pin. Share the link. Updated whenever I find something new.
-            </p>
-            <div className="mt-3 flex items-center gap-2">
-              <SocialLink
-                href={X_URL}
-                label="X"
-                svgPath="M18.244 2H21.5l-7.5 8.572L22.5 22h-6.844l-5.36-7.013L4.18 22H.918l8.022-9.166L.5 2h7l4.844 6.41L18.244 2zm-2.4 18h1.876L7.25 4H5.27l10.574 16z"
-              />
-              <SocialLink
-                href={LINKEDIN_URL}
-                label="LinkedIn"
-                svgPath="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.28 2.38 4.28 5.47v6.27zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"
-              />
-            </div>
-          </div>
+        <h1 className="font-display text-4xl sm:text-6xl leading-[1] font-semibold">
+          <span className="accent-underline">best of SF</span>{" "}
+          <span className="italic font-normal" style={{ color: "#708238" }}>
+            (tarlon&rsquo;s version)
+          </span>
+        </h1>
+        <p className="text-sm opacity-70 leading-relaxed mt-3 max-w-2xl">
+          A curated map of my favorite places in San Francisco. Tap any pin.
+          Share the link. Updated whenever I find something new.
+        </p>
+        <div className="mt-3 flex items-center gap-2">
+          <SocialLink
+            href={X_URL}
+            label="X"
+            svgPath="M18.244 2H21.5l-7.5 8.572L22.5 22h-6.844l-5.36-7.013L4.18 22H.918l8.022-9.166L.5 2h7l4.844 6.41L18.244 2zm-2.4 18h1.876L7.25 4H5.27l10.574 16z"
+          />
+          <SocialLink
+            href={LINKEDIN_URL}
+            label="LinkedIn"
+            svgPath="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.28 2.38 4.28 5.47v6.27zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"
+          />
         </div>
       </header>
 
