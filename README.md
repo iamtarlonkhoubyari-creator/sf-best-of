@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# the best of SF — Tarlon's version
 
-## Getting Started
+a living, breathing map of my favorite places in San Francisco.
+six categories, one squiggle, no API keys.
 
-First, run the development server:
+## stack
+
+- Next.js 16 + Tailwind 4 + TypeScript
+- Leaflet + OpenStreetMap (CARTO Voyager tiles) — no Mapbox/Google token
+- one TS file as the source of truth: `src/data/places.ts`
+- Vercel for deploy
+
+## run it locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+→ open http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## adding a new list
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run add -- <category> "name 1, name 2, name 3"
+```
 
-## Learn More
+example:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run add -- bars "bar crenn, ama, horsefeather"
+npm run add -- cry "ocean beach, golden gate park"
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+categories: `bars`, `crash`, `cappuccinos`, `cry`, `dinner`, `breakup`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+the script geocodes each name via OpenStreetMap Nominatim (no API key, no
+billing, ~1 req/sec). misses are inserted at SF center with `needsReview: true`
+so you can fix the lat/lng by hand later. then commit and push — Vercel
+auto-deploys.
 
-## Deploy on Vercel
+## adding a new *category*
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+edit `src/data/places.ts`:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. add an id to the `CategoryId` union
+2. add an entry in the `CATEGORIES` array (label, emoji, color, blurb)
+3. (optional) add it to `VALID_CATEGORIES` in `scripts/add.mjs` so the CLI accepts it
+
+## deploy
+
+```bash
+npx vercel --prod
+```
+
+or push to GitHub and import the repo at vercel.com/new.
+
+## socials
+
+links live in `src/app/page.tsx` — search for `X_HANDLE` and `LINKEDIN_HANDLE`.

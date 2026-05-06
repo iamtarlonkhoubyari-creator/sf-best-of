@@ -1,26 +1,97 @@
 @import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg:        #FFF6E9;   /* foggy cream */
+  --ink:       #2E2438;   /* deep plum */
+  --rose:      #E94B6A;   /* painted-lady rose */
+  --gg-red:    #D9483B;   /* golden gate red */
+  --ocean:     #4A90E2;
+  --peach:     #FFB07A;
+  --mint:      #A8E6CF;
+  --lavender:  #C9A0DC;
+  --sun:       #FFD23F;
+  --paper:     #FFFAF1;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--bg);
+  --color-foreground: var(--ink);
+  --font-sans: var(--font-quicksand);
+  --font-display: var(--font-caveat);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--ink);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-quicksand), system-ui, sans-serif;
+  -webkit-tap-highlight-color: transparent;
 }
+
+.font-display {
+  font-family: var(--font-caveat), cursive;
+}
+
+/* squiggly underline used for headings */
+.squiggle {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 8'><path d='M0 4 Q 10 0 20 4 T 40 4 T 60 4 T 80 4' fill='none' stroke='%23E94B6A' stroke-width='2'/></svg>");
+  background-repeat: repeat-x;
+  background-position: bottom left;
+  background-size: 80px 8px;
+  padding-bottom: 6px;
+}
+
+/* Leaflet UI tweaks */
+.leaflet-container {
+  background: #f6efdc !important;
+  font-family: inherit;
+}
+.leaflet-control-attribution {
+  font-size: 10px !important;
+  background: rgba(255, 250, 241, 0.8) !important;
+}
+.leaflet-popup-content-wrapper {
+  border-radius: 16px !important;
+  box-shadow: 0 8px 30px rgba(46, 36, 56, 0.15) !important;
+  background: var(--paper) !important;
+}
+.leaflet-popup-tip { background: var(--paper) !important; }
+.leaflet-popup-content { margin: 14px 18px !important; }
+
+/* custom emoji pin */
+.emoji-pin {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  box-shadow: 0 4px 10px rgba(46, 36, 56, 0.25);
+  border: 2px solid var(--paper);
+  transition: transform 120ms ease;
+}
+.emoji-pin > span {
+  transform: rotate(45deg);
+  display: block;
+  filter: drop-shadow(0 1px 0 rgba(0,0,0,0.15));
+}
+.emoji-pin:hover {
+  transform: rotate(-45deg) scale(1.12);
+}
+
+/* gentle wobble */
+@keyframes wobble {
+  0%,100% { transform: rotate(-2deg); }
+  50%     { transform: rotate(2deg); }
+}
+.wobble { animation: wobble 3.5s ease-in-out infinite; transform-origin: 50% 90%; }
+
+/* hide scrollbars on chip rows */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }

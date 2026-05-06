@@ -1,65 +1,232 @@
-import Image from "next/image";
+"use client";
+
+import dynamic from "next/dynamic";
+import { useState } from "react";
+import { CATEGORIES, type CategoryId, type Place } from "@/data/places";
+
+// Leaflet uses window — load only on the client.
+const Map = dynamic(() => import("@/components/Map"), {
+  ssr: false,
+  loading: () => (
+    <div className="h-full w-full grid place-items-center text-[var(--ink)]/60">
+      <span className="font-display text-3xl wobble">finding the city…</span>
+    </div>
+  ),
+});
+
+const X_HANDLE = "tarlonkhoubyari";   // TODO: confirm handle
+const LINKEDIN_HANDLE = "tarlonkhoubyari"; // TODO: confirm handle
 
 export default function Home() {
+  const [active, setActive] = useState<Set<CategoryId>>(
+    () => new Set(CATEGORIES.map((c) => c.id)),
+  );
+  const [selected, setSelected] = useState<Place | null>(null);
+
+  const toggle = (id: CategoryId) => {
+    setActive((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      // never allow zero — at least one category on
+      if (next.size === 0) next.add(id);
+      return next;
+    });
+  };
+
+  const selectAll = () => setActive(new Set(CATEGORIES.map((c) => c.id)));
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className="relative flex flex-col flex-1 min-h-screen">
+      {/* Header */}
+      <header className="px-4 pt-5 pb-3 sm:px-8 sm:pt-7 z-[1000]">
+        <div className="flex items-end justify-between gap-3 flex-wrap">
+          <div>
+            <h1 className="font-display text-4xl sm:text-6xl leading-none">
+              <span className="squiggle">the best of SF</span>
+            </h1>
+            <p className="font-display text-2xl sm:text-3xl text-[var(--rose)] -mt-1">
+              Tarlon&apos;s version
+            </p>
+          </div>
+          <p className="text-xs sm:text-sm opacity-70 max-w-xs">
+            a living, breathing map of my favorite places. tap a pin. share the
+            link. yell at me on X if i missed one.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+      </header>
+
+      {/* Category chips */}
+      <nav className="px-4 sm:px-8 pb-3 z-[1000]">
+        <div className="flex gap-2 overflow-x-auto no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
+          <Chip
+            label="all"
+            emoji="✨"
+            color="var(--ink)"
+            active={active.size === CATEGORIES.length}
+            onClick={selectAll}
+          />
+          {CATEGORIES.map((c) => (
+            <Chip
+              key={c.id}
+              label={c.label}
+              emoji={c.emoji}
+              color={c.color}
+              active={active.has(c.id)}
+              onClick={() => toggle(c.id)}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          ))}
         </div>
-      </main>
+      </nav>
+
+      {/* Map */}
+      <section className="relative flex-1 mx-4 sm:mx-8 mb-4 rounded-3xl overflow-hidden border-2 border-[var(--ink)]/10 shadow-[0_10px_40px_-10px_rgba(46,36,56,0.25)]">
+        <Map active={active} onSelect={setSelected} />
+        <Socials />
+      </section>
+
+      {/* Detail sheet */}
+      {selected && <DetailSheet place={selected} onClose={() => setSelected(null)} />}
+
+      {/* Tiny footer */}
+      <footer className="px-4 sm:px-8 pb-4 text-xs opacity-60 flex items-center justify-between flex-wrap gap-2">
+        <span>
+          made with 🥐 in SF · find me on{" "}
+          <a
+            className="underline decoration-[var(--rose)]"
+            target="_blank"
+            rel="noreferrer"
+            href={`https://x.com/${X_HANDLE}`}
+          >
+            X
+          </a>{" "}
+          ·{" "}
+          <a
+            className="underline decoration-[var(--ocean)]"
+            target="_blank"
+            rel="noreferrer"
+            href={`https://linkedin.com/in/${LINKEDIN_HANDLE}`}
+          >
+            LinkedIn
+          </a>
+        </span>
+        <span className="font-display text-base">
+          {CATEGORIES.length} categories · always growing 🌱
+        </span>
+      </footer>
+    </main>
+  );
+}
+
+function Chip({
+  label,
+  emoji,
+  color,
+  active,
+  onClick,
+}: {
+  label: string;
+  emoji: string;
+  color: string;
+  active: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border-2 text-sm font-medium transition-all"
+      style={{
+        borderColor: active ? color : "rgba(46,36,56,0.15)",
+        background: active ? color : "var(--paper)",
+        color: active ? "white" : "var(--ink)",
+        boxShadow: active ? "0 4px 14px -4px " + color : "none",
+      }}
+    >
+      <span>{emoji}</span>
+      <span className="whitespace-nowrap">{label}</span>
+    </button>
+  );
+}
+
+function DetailSheet({
+  place,
+  onClose,
+}: {
+  place: Place;
+  onClose: () => void;
+}) {
+  const cat = CATEGORIES.find((c) => c.id === place.category)!;
+  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    place.name + " San Francisco",
+  )}`;
+  return (
+    <div
+      role="dialog"
+      className="fixed inset-x-0 bottom-0 z-[2000] sm:inset-x-auto sm:right-6 sm:bottom-6 sm:max-w-sm"
+    >
+      <div
+        className="bg-[var(--paper)] rounded-t-3xl sm:rounded-3xl p-5 shadow-[0_-10px_40px_rgba(46,36,56,0.18)] border-2 border-[var(--ink)]/10"
+        style={{ borderTopColor: cat.color }}
+      >
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <div className="text-xs uppercase tracking-wider opacity-60">
+              {cat.emoji} {cat.label}
+            </div>
+            <h2 className="font-display text-3xl leading-tight mt-1">
+              {place.name}
+            </h2>
+            {place.note && (
+              <p className="text-sm opacity-80 mt-1">{place.note}</p>
+            )}
+          </div>
+          <button
+            onClick={onClose}
+            aria-label="close"
+            className="rounded-full w-8 h-8 grid place-items-center bg-[var(--ink)]/5 hover:bg-[var(--ink)]/10"
+          >
+            ✕
+          </button>
+        </div>
+        <a
+          href={mapsUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="mt-4 inline-flex items-center gap-2 text-sm px-4 py-2 rounded-full font-medium"
+          style={{ background: cat.color, color: "white" }}
+        >
+          open in Google Maps →
+        </a>
+      </div>
+    </div>
+  );
+}
+
+function Socials() {
+  return (
+    <div className="absolute right-3 bottom-3 z-[1000] flex gap-2">
+      <a
+        href={`https://x.com/${X_HANDLE}`}
+        target="_blank"
+        rel="noreferrer"
+        aria-label="X"
+        className="w-10 h-10 grid place-items-center rounded-full bg-[var(--paper)] border-2 border-[var(--ink)]/10 shadow hover:scale-105 transition"
+      >
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <path d="M18.244 2H21.5l-7.5 8.572L22.5 22h-6.844l-5.36-7.013L4.18 22H.918l8.022-9.166L.5 2h7l4.844 6.41L18.244 2zm-2.4 18h1.876L7.25 4H5.27l10.574 16z" />
+        </svg>
+      </a>
+      <a
+        href={`https://linkedin.com/in/${LINKEDIN_HANDLE}`}
+        target="_blank"
+        rel="noreferrer"
+        aria-label="LinkedIn"
+        className="w-10 h-10 grid place-items-center rounded-full bg-[var(--paper)] border-2 border-[var(--ink)]/10 shadow hover:scale-105 transition"
+      >
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.28 2.38 4.28 5.47v6.27zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z" />
+        </svg>
+      </a>
     </div>
   );
 }
