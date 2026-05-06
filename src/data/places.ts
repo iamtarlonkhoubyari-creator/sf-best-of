@@ -85,6 +85,16 @@ export const PLACES: Place[] = [
   { id: "horsefeather",  name: "Horsefeather",     category: "bars", lat: 37.7740, lng: -122.4374, note: "528 Divisadero" },
   { id: "the-interval",  name: "The Interval",     category: "bars", lat: 37.8062, lng: -122.4310, note: "Long Now @ Fort Mason" },
   { id: "final-final",   name: "Final Final",      category: "bars", lat: 37.7980, lng: -122.4471, note: "2990 Baker St" },
+  { id: "union-larder",  name: "Union Larder",     category: "bars", lat: 37.7984, lng: -122.4187, note: "1945 Hyde", needsReview: true },
+  { id: "celeste",       name: "Celeste",          category: "bars", lat: 37.7991, lng: -122.4080, note: "522 Columbus" },
+  { id: "harper-rye",    name: "Harper + Rye",     category: "bars", lat: 37.7920, lng: -122.4216, note: "Polk St", needsReview: true },
+  { id: "side-a",        name: "Side A",           category: "bars", lat: 37.7849, lng: -122.4194, needsReview: true },
+  { id: "buddy",         name: "Buddy",            category: "bars", lat: 37.7693, lng: -122.4290, note: "Church / Duboce" },
+  { id: "beehive",       name: "Beehive",          category: "bars", lat: 37.7591, lng: -122.4214, note: "842 Valencia" },
+  { id: "amelies",       name: "Amélie's",         category: "bars", lat: 37.7916, lng: -122.4216, note: "Polk St wine bar" },
+  { id: "true-laurel",   name: "True Laurel",      category: "bars", lat: 37.7595, lng: -122.4112, note: "753 Alabama" },
+  { id: "trick-dog",     name: "Trick Dog",        category: "bars", lat: 37.7592, lng: -122.4108, note: "3010 20th St" },
+  { id: "abv",           name: "ABV",              category: "bars", lat: 37.7651, lng: -122.4218, note: "3174 16th St" },
 
   // ───────── CRASH OUT ─────────
   { id: "wework-embarcadero", name: "WeWork Embarcadero",  category: "crash", lat: 37.7950, lng: -122.3996 },
