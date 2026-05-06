@@ -52,7 +52,7 @@ export const CATEGORIES: Category[] = [
   },
   {
     id: "breakup",
-    label: "Breakups",
+    label: "Cofounder breakups",
     longLabel: "Where to break up with your cofounder",
     emoji: "💔",
     color: "#D26B8E",

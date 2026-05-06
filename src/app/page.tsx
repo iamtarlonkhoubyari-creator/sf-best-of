@@ -40,19 +40,31 @@ export default function Home() {
     <main className="relative flex flex-col flex-1 min-h-screen">
       {/* Header */}
       <header className="px-4 pt-6 pb-4 sm:px-8 sm:pt-8 z-[1000]">
-        <div className="flex items-end justify-between gap-4 flex-wrap">
-          <div>
-            <h1 className="font-display text-5xl sm:text-7xl leading-[0.95] font-semibold">
-              The Best of <span className="accent-underline">SF</span>
-            </h1>
-            <p className="font-display italic text-2xl sm:text-3xl text-[var(--rose)] mt-1">
-              Tarlon&rsquo;s version
+        <div className="flex items-start justify-between gap-6 flex-wrap">
+          <h1 className="font-display text-4xl sm:text-6xl leading-[1] font-semibold">
+            <span className="accent-underline">best of SF</span>{" "}
+            <span className="italic text-[var(--rose)] font-normal">
+              (tarlon&rsquo;s version)
+            </span>
+          </h1>
+          <div className="max-w-sm">
+            <p className="text-sm opacity-70 leading-relaxed">
+              A curated map of my favorite places in San Francisco. Tap any
+              pin. Share the link. Updated whenever I find something new.
             </p>
+            <div className="mt-3 flex items-center gap-2">
+              <SocialLink
+                href={X_URL}
+                label="X"
+                svgPath="M18.244 2H21.5l-7.5 8.572L22.5 22h-6.844l-5.36-7.013L4.18 22H.918l8.022-9.166L.5 2h7l4.844 6.41L18.244 2zm-2.4 18h1.876L7.25 4H5.27l10.574 16z"
+              />
+              <SocialLink
+                href={LINKEDIN_URL}
+                label="LinkedIn"
+                svgPath="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.28 2.38 4.28 5.47v6.27zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"
+              />
+            </div>
           </div>
-          <p className="text-sm opacity-70 max-w-sm leading-relaxed">
-            A curated map of my favorite places in San Francisco. Tap any pin.
-            Share the link. Updated whenever I find something new.
-          </p>
         </div>
       </header>
 
@@ -82,7 +94,6 @@ export default function Home() {
       {/* Map */}
       <section className="relative flex-1 mx-4 sm:mx-8 mb-4 rounded-3xl overflow-hidden border-2 border-[var(--ink)]/10 shadow-[0_10px_40px_-10px_rgba(46,36,56,0.25)]">
         <Map active={active} onSelect={setSelected} />
-        <Socials />
       </section>
 
       {/* Detail sheet */}
@@ -90,26 +101,7 @@ export default function Home() {
 
       {/* Tiny footer */}
       <footer className="px-4 sm:px-8 pb-4 text-xs opacity-60 flex items-center justify-between flex-wrap gap-2">
-        <span>
-          By Tarlon Khoubyari ·{" "}
-          <a
-            className="underline decoration-[var(--rose)] underline-offset-2"
-            target="_blank"
-            rel="noreferrer"
-            href={X_URL}
-          >
-            X
-          </a>{" "}
-          ·{" "}
-          <a
-            className="underline decoration-[var(--ocean)] underline-offset-2"
-            target="_blank"
-            rel="noreferrer"
-            href={LINKEDIN_URL}
-          >
-            LinkedIn
-          </a>
-        </span>
+        <span>By Tarlon Khoubyari</span>
         <span className="font-display italic">
           {CATEGORIES.length} categories, always growing.
         </span>
@@ -173,7 +165,10 @@ function DetailSheet({
             <div className="text-xs uppercase tracking-wider opacity-60">
               {cat.emoji} {cat.longLabel}
             </div>
-            <h2 className="font-display text-3xl leading-tight mt-1">
+            <h2
+              className="font-display text-4xl sm:text-5xl leading-[1] mt-1 font-semibold"
+              style={{ color: cat.color }}
+            >
               {place.name}
             </h2>
             {place.note && (
@@ -202,31 +197,27 @@ function DetailSheet({
   );
 }
 
-function Socials() {
+function SocialLink({
+  href,
+  label,
+  svgPath,
+}: {
+  href: string;
+  label: string;
+  svgPath: string;
+}) {
   return (
-    <div className="absolute right-3 bottom-3 z-[1000] flex gap-2">
-      <a
-        href={X_URL}
-        target="_blank"
-        rel="noreferrer"
-        aria-label="X"
-        className="w-10 h-10 grid place-items-center rounded-full bg-[var(--paper)] border-2 border-[var(--ink)]/10 shadow hover:scale-105 transition"
-      >
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-          <path d="M18.244 2H21.5l-7.5 8.572L22.5 22h-6.844l-5.36-7.013L4.18 22H.918l8.022-9.166L.5 2h7l4.844 6.41L18.244 2zm-2.4 18h1.876L7.25 4H5.27l10.574 16z" />
-        </svg>
-      </a>
-      <a
-        href={LINKEDIN_URL}
-        target="_blank"
-        rel="noreferrer"
-        aria-label="LinkedIn"
-        className="w-10 h-10 grid place-items-center rounded-full bg-[var(--paper)] border-2 border-[var(--ink)]/10 shadow hover:scale-105 transition"
-      >
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-          <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.28 2.38 4.28 5.47v6.27zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z" />
-        </svg>
-      </a>
-    </div>
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={label}
+      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--paper)] border border-[var(--ink)]/15 text-xs font-medium hover:bg-[var(--ink)] hover:text-white transition"
+    >
+      <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
+        <path d={svgPath} />
+      </svg>
+      {label}
+    </a>
   );
 }

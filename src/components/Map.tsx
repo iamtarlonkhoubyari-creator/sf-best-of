@@ -67,12 +67,19 @@ export default function Map({ active, onSelect }: Props) {
             eventHandlers={{ click: () => onSelect(p) }}
           >
             <Popup>
-              <div className="text-[var(--ink)]">
-                <div className="text-xs uppercase tracking-wider opacity-60">
+              <div className="text-[var(--ink)] min-w-[180px]">
+                <div className="text-[10px] uppercase tracking-[0.15em] opacity-60 font-medium">
                   {cat.emoji} {cat.longLabel}
                 </div>
-                <div className="font-semibold text-base">{p.name}</div>
-                {p.note && <div className="text-sm opacity-80">{p.note}</div>}
+                <div
+                  className="font-display text-2xl font-semibold leading-tight mt-0.5"
+                  style={{ color: cat.color }}
+                >
+                  {p.name}
+                </div>
+                {p.note && (
+                  <div className="text-xs opacity-75 mt-1">{p.note}</div>
+                )}
                 {p.needsReview && (
                   <div className="text-[10px] mt-1 opacity-50 italic">
                     approximate location
