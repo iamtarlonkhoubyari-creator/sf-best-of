@@ -95,7 +95,7 @@ export const PLACES: Place[] = [
   { id: "trick-dog",     name: "Trick Dog",        category: "bars", lat: 37.7592, lng: -122.4108, note: "3010 20th St" },
   { id: "abv",           name: "ABV",              category: "bars", lat: 37.7651, lng: -122.4218, note: "3174 16th St" },
   { id: "fools-errand",  name: "Fool's Errand",    category: "bars", lat: 37.7704, lng: -122.4513, note: "1640 Haight" },
-  { id: "leftdoor",      name: "Leftdoor",         category: "bars", lat: 37.7849, lng: -122.4194, needsReview: true },
+  { id: "leftdoor",      name: "Leftdoor",         category: "bars", lat: 37.7976, lng: -122.4314, note: "1905 Union" },
 
   // ───────── CRASH OUT ─────────
   { id: "wework-embarcadero", name: "WeWork Embarcadero",  category: "crash", lat: 37.7950, lng: -122.3996 },
