@@ -84,7 +84,6 @@ export const PLACES: Place[] = [
   { id: "bar-darling",   name: "Bar Darling",      category: "bars", lat: 37.7733, lng: -122.4376, note: "Divisadero" },
   { id: "horsefeather",  name: "Horsefeather",     category: "bars", lat: 37.7740, lng: -122.4374, note: "528 Divisadero" },
   { id: "the-interval",  name: "The Interval",     category: "bars", lat: 37.8062, lng: -122.4310, note: "Long Now @ Fort Mason" },
-  { id: "final-final",   name: "Final Final",      category: "bars", lat: 37.7980, lng: -122.4471, note: "2990 Baker St" },
   { id: "union-larder",  name: "Union Larder",     category: "bars", lat: 37.7984, lng: -122.4187, note: "1945 Hyde", needsReview: true },
   { id: "celeste",       name: "Celeste",          category: "bars", lat: 37.7991, lng: -122.4080, note: "522 Columbus" },
   { id: "harper-rye",    name: "Harper + Rye",     category: "bars", lat: 37.7920, lng: -122.4216, note: "Polk St", needsReview: true },
