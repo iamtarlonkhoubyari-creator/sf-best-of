@@ -21,6 +21,7 @@ const VALID_CATEGORIES = new Set([
   "cry",
   "dinner",
   "breakup",
+  "grass",
 ]);
 
 // SF bounding box for Nominatim viewbox bias

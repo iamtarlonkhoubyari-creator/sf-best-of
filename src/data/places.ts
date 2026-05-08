@@ -4,7 +4,8 @@ export type CategoryId =
   | "cappuccinos"
   | "cry"
   | "dinner"
-  | "breakup";
+  | "breakup"
+  | "grass";
 
 export type Category = {
   id: CategoryId;
@@ -57,6 +58,13 @@ export const CATEGORIES: Category[] = [
     emoji: "💔",
     color: "#D26B8E",
   },
+  {
+    id: "grass",
+    label: "Touch grass",
+    longLabel: "Best places to touch grass",
+    emoji: "🌱",
+    color: "#88C057",
+  },
 ];
 
 export type Place = {
@@ -74,19 +82,19 @@ export type Place = {
 export const PLACES: Place[] = [
   // ───────── BARS ─────────
   { id: "bar-crenn",     name: "Bar Crenn",        category: "bars", lat: 37.7984, lng: -122.4368, note: "3131 Fillmore" },
-  { id: "bar-sprez",     name: "Bar Sprez",        category: "bars", lat: 37.7770, lng: -122.4258, note: "Hayes Valley", needsReview: true },
+  { id: "bar-sprez",     name: "Bar Sprez",        category: "bars", lat: 37.7957, lng: -122.3993, note: "One Maritime Plaza" },
   { id: "bar-bibi",      name: "Bar Bibi",         category: "bars", lat: 37.7882, lng: -122.4054, note: "27 Maiden Lane" },
   { id: "verjus",        name: "Verjus",           category: "bars", lat: 37.7960, lng: -122.4033, note: "528 Washington — wine bar" },
   { id: "anina",         name: "Anina",            category: "bars", lat: 37.7766, lng: -122.4258, note: "Hayes Valley cocktails" },
-  { id: "geelou",        name: "Geelou",           category: "bars", lat: 37.7826, lng: -122.4192, needsReview: true },
+  { id: "geelou",        name: "Geelou",           category: "bars", lat: 37.7998, lng: -122.4415, note: "3251 Scott St" },
   { id: "waystone",      name: "Waystone",         category: "bars", lat: 37.7521, lng: -122.4327, note: "Noe Valley" },
-  { id: "key-klub",      name: "Key Klub",         category: "bars", lat: 37.7918, lng: -122.4216, note: "Polk St" },
+  { id: "key-klub",      name: "Key Klub",         category: "bars", lat: 37.7901, lng: -122.4114, note: "850 Bush St" },
   { id: "bar-darling",   name: "Bar Darling",      category: "bars", lat: 37.7733, lng: -122.4376, note: "Divisadero" },
   { id: "horsefeather",  name: "Horsefeather",     category: "bars", lat: 37.7740, lng: -122.4374, note: "528 Divisadero" },
   { id: "the-interval",  name: "The Interval",     category: "bars", lat: 37.8062, lng: -122.4310, note: "Long Now @ Fort Mason" },
-  { id: "union-larder",  name: "Union Larder",     category: "bars", lat: 37.7984, lng: -122.4187, note: "1945 Hyde", needsReview: true },
+  { id: "union-larder",  name: "Union Larder",     category: "bars", lat: 37.7988, lng: -122.4192, note: "1945 Hyde St" },
   { id: "celeste",       name: "Celeste",          category: "bars", lat: 37.7991, lng: -122.4080, note: "522 Columbus" },
-  { id: "harper-rye",    name: "Harper + Rye",     category: "bars", lat: 37.7920, lng: -122.4216, note: "Polk St", needsReview: true },
+  { id: "harper-rye",    name: "Harper + Rye",     category: "bars", lat: 37.7922, lng: -122.4213, note: "1695 Polk St" },
   { id: "side-a",        name: "Side A",           category: "bars", lat: 37.7607, lng: -122.4117, note: "2814 19th St" },
   { id: "buddy",         name: "Buddy",            category: "bars", lat: 37.7693, lng: -122.4290, note: "Church / Duboce" },
   { id: "beehive",       name: "Beehive",          category: "bars", lat: 37.7591, lng: -122.4214, note: "842 Valencia" },
@@ -111,12 +119,12 @@ export const PLACES: Place[] = [
   // ───────── CAPPUCCINOS ─────────
   { id: "st-frank",        name: "St. Frank",         category: "cappuccinos", lat: 37.7956, lng: -122.4365, note: "Fillmore" },
   { id: "the-mill",        name: "The Mill",          category: "cappuccinos", lat: 37.7762, lng: -122.4375, note: "736 Divisadero" },
-  { id: "juniper",         name: "Juniper",           category: "cappuccinos", lat: 37.7826, lng: -122.4192, needsReview: true },
+  { id: "juniper",         name: "Juniper",           category: "cappuccinos", lat: 37.7897, lng: -122.4207, note: "1401 Polk St" },
   { id: "andytown",        name: "Andytown",          category: "cappuccinos", lat: 37.7551, lng: -122.4977, note: "get the whipped cream" },
-  { id: "hedge",           name: "Hedge",             category: "cappuccinos", lat: 37.7826, lng: -122.4192, needsReview: true },
+  { id: "hedge",           name: "Hedge",             category: "cappuccinos", lat: 37.7614, lng: -122.4161, note: "434 Shotwell St" },
   { id: "grand-coffee",    name: "Grand Coffee",      category: "cappuccinos", lat: 37.7619, lng: -122.4193, note: "2200 Mission" },
-  { id: "third-wheel",     name: "Third Wheel Coffee",category: "cappuccinos", lat: 37.7826, lng: -122.4192, needsReview: true },
-  { id: "wooden-coffee",   name: "Wooden Coffee House",category:"cappuccinos", lat: 37.7826, lng: -122.4192, needsReview: true },
+  { id: "third-wheel",     name: "Third Wheel Coffee",category: "cappuccinos", lat: 37.7732, lng: -122.4355, note: "991 Oak St" },
+  { id: "wooden-coffee",   name: "Wooden Coffee House",category:"cappuccinos", lat: 37.7660, lng: -122.4498, note: "862 Cole St" },
 
   // ───────── CRY ─────────
   { id: "golden-gate-park", name: "Golden Gate Park", category: "cry", lat: 37.7694, lng: -122.4862 },
@@ -144,13 +152,22 @@ export const PLACES: Place[] = [
 
   // ───────── BREAKUP ─────────
   { id: "south-park",      name: "South Park",       category: "breakup", lat: 37.7811, lng: -122.3934 },
-  { id: "chase-to-fortmason", name: "Chase Center → Fort Mason walk", category: "breakup", lat: 37.7874, lng: -122.4096, note: "the whole walk" },
+  { id: "chase-to-fortmason", name: "Chase Center → Fort Mason walk", category: "breakup", lat: 37.7679, lng: -122.3874, note: "starts at Chase Center" },
   { id: "fort-mason-breakup", name: "Fort Mason",      category: "breakup", lat: 37.8068, lng: -122.4313 },
   { id: "the-battery",     name: "The Battery",      category: "breakup", lat: 37.7975, lng: -122.4007, note: "717 Battery St" },
   { id: "pacific-st-walk", name: "Pacific St walk",  category: "breakup", lat: 37.7940, lng: -122.4180, note: "Jackson Sq → Lafayette Park" },
   { id: "palace-hotel-lobby", name: "Palace Hotel lobby", category: "breakup", lat: 37.7882, lng: -122.4015 },
   { id: "salesforce-park-breakup", name: "Salesforce Park", category: "breakup", lat: 37.7898, lng: -122.3942, note: "loop for hours" },
   { id: "palace-of-fine-arts", name: "Palace of Fine Arts", category: "breakup", lat: 37.8029, lng: -122.4485 },
+  // ───────── TOUCH GRASS ─────────
+  { id: "pan-handle",        name: "The Panhandle",        category: "grass", lat: 37.7717, lng: -122.4513, note: "GG Park's eastern strip" },
+  { id: "holly-park",        name: "Holly Park",           category: "grass", lat: 37.7372, lng: -122.4199 },
+  { id: "bison-paddock",     name: "Bison Paddock",        category: "grass", lat: 37.7706, lng: -122.4830, note: "1237 JFK Dr — Golden Gate Park" },
+  { id: "alta-plaza",        name: "Alta Plaza",           category: "grass", lat: 37.7912, lng: -122.4377 },
+  { id: "presidio-tunnel-tops", name: "Presidio Tunnel Tops", category: "grass", lat: 37.8029, lng: -122.4559 },
+  { id: "lands-end",         name: "Lands End",            category: "grass", lat: 37.7838, lng: -122.5068 },
+  { id: "peacock-meadow",    name: "Peacock Meadow",       category: "grass", lat: 37.7715, lng: -122.4593, note: "Golden Gate Park" },
+  { id: "bernal-heights",    name: "Bernal Heights",       category: "grass", lat: 37.7410, lng: -122.4142 },
   // <ADD_PLACES_HERE>  ← do not remove. `npm run add` inserts new entries above this line.
 ];
 
