@@ -131,7 +131,7 @@ export default async function Image() {
           <Pin emoji="😢" label="cry" color="#4A90E2" />
           <Pin emoji="🍽️" label="private dining" color="#5FA86F" />
           <Pin emoji="💔" label="breakups" color="#D26B8E" />
-          <Pin emoji="🌱" label="touch grass" color="#88C057" />
+          <Pin emoji="🌱" label="touch grass" color="#2e4a36" />
         </div>
 
         <div

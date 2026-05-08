@@ -63,7 +63,7 @@ export const CATEGORIES: Category[] = [
     label: "Touch grass",
     longLabel: "Best places to touch grass",
     emoji: "🌱",
-    color: "#88C057",
+    color: "#2e4a36",
   },
 ];
 
