@@ -60,8 +60,8 @@ export const CATEGORIES: Category[] = [
   },
   {
     id: "sun",
-    label: "Camera off",
-    longLabel: "Be camera off",
+    label: "Sun spots",
+    longLabel: "Sun spots",
     emoji: "☀️",
     color: "#E8A33C",
   },
