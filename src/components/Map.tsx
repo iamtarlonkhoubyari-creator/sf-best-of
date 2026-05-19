@@ -15,10 +15,12 @@ const categoryById = Object.fromEntries(
   CATEGORIES.map((c) => [c.id, c]),
 ) as Record<CategoryId, (typeof CATEGORIES)[number]>;
 
-function buildIcon(emoji: string, color: string, id: string) {
+function buildIcon(emoji: string, color: string, id: string, isNew: boolean) {
+  const cls = `emoji-pin${isNew ? " is-new" : ""}`;
+  const sparkle = isNew ? `<span class="pin-sparkle">✨</span>` : "";
   return L.divIcon({
     className: "",
-    html: `<div class="emoji-pin" data-place-id="${id}" style="background:${color}"><span>${emoji}</span></div>`,
+    html: `<div class="${cls}" data-place-id="${id}" style="background:${color};--pin-color:${color}"><span>${emoji}</span>${sparkle}</div>`,
     iconSize: [38, 38],
     iconAnchor: [19, 38],
     popupAnchor: [0, -34],
@@ -56,20 +58,22 @@ function FlyController({ target }: { target: FlyTo }) {
 
 type Props = {
   visible: Place[];
+  isNew?: (p: Place) => boolean;
   onSelect: (place: Place) => void;
   flyTo?: FlyTo;
 };
 
-export default function Map({ visible, onSelect, flyTo = null }: Props) {
-  // build one icon per place so we can target a specific pin for the pulse
+export default function Map({ visible, isNew, onSelect, flyTo = null }: Props) {
+  // build one icon per place so we can target a specific pin for the pulse;
+  // rebuild when isNew identity changes (after hydration)
   const iconCache = useMemo(() => {
     const m: Record<string, L.DivIcon> = {};
     for (const p of PLACES) {
       const cat = categoryById[p.category];
-      m[p.id] = buildIcon(cat.emoji, cat.color, p.id);
+      m[p.id] = buildIcon(cat.emoji, cat.color, p.id, isNew ? isNew(p) : false);
     }
     return m;
-  }, []);
+  }, [isNew]);
 
   return (
     <MapContainer

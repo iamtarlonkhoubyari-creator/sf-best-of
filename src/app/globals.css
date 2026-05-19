@@ -121,6 +121,37 @@ body {
 }
 .emoji-pin.pulse { animation: pinPulse 900ms cubic-bezier(.22,1,.36,1); }
 
+/* "new" pin — soft pulsing ring + corner sparkle */
+.emoji-pin.is-new { position: relative; }
+.emoji-pin.is-new::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: inherit;
+  border: 2px solid var(--pin-color, currentColor);
+  opacity: 0.55;
+  pointer-events: none;
+  animation: pinNewPulse 1.8s ease-out infinite;
+}
+@keyframes pinNewPulse {
+  0%   { transform: scale(1);   opacity: 0.55; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+.pin-sparkle {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 13px;
+  pointer-events: none;
+  transform: rotate(45deg); /* counter the pin's -45deg so sparkle reads upright */
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+  animation: sparkleFlicker 2.4s ease-in-out infinite;
+}
+@keyframes sparkleFlicker {
+  0%, 100% { opacity: 1;   transform: rotate(45deg) scale(1); }
+  50%      { opacity: 0.55; transform: rotate(45deg) scale(0.85); }
+}
+
 /* chip hover lift (kept for any residual use) */
 .chip-lift { transition: transform 140ms ease, box-shadow 140ms ease, opacity 140ms ease; }
 .chip-lift:hover { transform: translateY(-1px); opacity: 1 !important; }

@@ -304,6 +304,7 @@ export default function Home() {
         <section className="relative flex-1 min-h-[60vh] md:min-h-0 rounded-3xl overflow-hidden border-2 border-[var(--ink)]/10 shadow-[0_10px_40px_-10px_rgba(46,36,56,0.25)]">
           <Map
             visible={visiblePlaces}
+            isNew={isNew}
             onSelect={setSelected}
             flyTo={flyTo}
           />
