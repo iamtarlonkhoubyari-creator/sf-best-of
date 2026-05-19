@@ -117,14 +117,14 @@ export default function Home() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const toggle = (id: CategoryId) => {
+  const selectOne = (id: CategoryId) => {
     setShowNewOnly(false);
     setActive((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      if (next.size === 0) next.add(id);
-      return next;
+      // Clicking the currently-soloed category resets to "all"
+      if (prev.size === 1 && prev.has(id)) {
+        return new Set(CATEGORIES.map((c) => c.id));
+      }
+      return new Set([id]);
     });
   };
 
@@ -295,7 +295,7 @@ export default function Home() {
                 newCount={newCounts[c.id]}
                 color={c.color}
                 active={!showNewOnly && !allActive && active.has(c.id)}
-                onClick={() => toggle(c.id)}
+                onClick={() => selectOne(c.id)}
               />
             ))}
           </ol>
