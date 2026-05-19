@@ -21,7 +21,7 @@ const VALID_CATEGORIES = new Set([
   "cry",
   "dinner",
   "breakup",
-  "grass",
+  "sun",
 ]);
 
 // SF bounding box for Nominatim viewbox bias
@@ -53,7 +53,7 @@ async function geocode(name) {
   return { lat: Number(lat), lng: Number(lon) };
 }
 
-function fmtEntry({ id, name, category, lat, lng, note, needsReview }) {
+function fmtEntry({ id, name, category, lat, lng, note, needsReview, addedAt }) {
   const parts = [
     `id: "${id}"`,
     `name: ${JSON.stringify(name)}`,
@@ -63,8 +63,11 @@ function fmtEntry({ id, name, category, lat, lng, note, needsReview }) {
   ];
   if (note) parts.push(`note: ${JSON.stringify(note)}`);
   if (needsReview) parts.push(`needsReview: true`);
+  if (addedAt) parts.push(`addedAt: ${JSON.stringify(addedAt)}`);
   return `  { ${parts.join(", ")} },`;
 }
+
+const today = () => new Date().toISOString().slice(0, 10);
 
 async function main() {
   const [, , category, namesArg, ...rest] = process.argv;
@@ -118,7 +121,7 @@ async function main() {
     if (coords) {
       console.log(`  ✓ ${name}  →  ${coords.lat}, ${coords.lng}`);
       newEntries.push(
-        fmtEntry({ id, name, category, ...coords, note }),
+        fmtEntry({ id, name, category, ...coords, note, addedAt: today() }),
       );
     } else {
       console.log(`  ✗ ${name}  →  no result; using SF center (review later)`);
@@ -131,6 +134,7 @@ async function main() {
           lng: -122.4194,
           note,
           needsReview: true,
+          addedAt: today(),
         }),
       );
     }

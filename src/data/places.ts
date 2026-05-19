@@ -5,7 +5,7 @@ export type CategoryId =
   | "cry"
   | "dinner"
   | "breakup"
-  | "grass";
+  | "sun";
 
 export type Category = {
   id: CategoryId;
@@ -59,11 +59,11 @@ export const CATEGORIES: Category[] = [
     color: "#D26B8E",
   },
   {
-    id: "grass",
-    label: "Touch grass",
-    longLabel: "Best places to touch grass",
-    emoji: "🌱",
-    color: "#2e4a36",
+    id: "sun",
+    label: "Camera off",
+    longLabel: "Be camera off",
+    emoji: "☀️",
+    color: "#E8A33C",
   },
 ];
 
@@ -75,6 +75,7 @@ export type Place = {
   lng: number;
   note?: string;
   needsReview?: boolean; // approximate coords; refine via CLI
+  addedAt?: string; // ISO date "YYYY-MM-DD" — surfaced as "new since last visit"
 };
 
 // Coordinates are best-effort from public knowledge.
@@ -159,15 +160,23 @@ export const PLACES: Place[] = [
   { id: "palace-hotel-lobby", name: "Palace Hotel lobby", category: "breakup", lat: 37.7882, lng: -122.4015 },
   { id: "salesforce-park-breakup", name: "Salesforce Park", category: "breakup", lat: 37.7898, lng: -122.3942, note: "loop for hours" },
   { id: "palace-of-fine-arts", name: "Palace of Fine Arts", category: "breakup", lat: 37.8029, lng: -122.4485 },
-  // ───────── TOUCH GRASS ─────────
-  { id: "pan-handle",        name: "The Panhandle",        category: "grass", lat: 37.7717, lng: -122.4513, note: "GG Park's eastern strip" },
-  { id: "holly-park",        name: "Holly Park",           category: "grass", lat: 37.7372, lng: -122.4199 },
-  { id: "bison-paddock",     name: "Bison Paddock",        category: "grass", lat: 37.7706, lng: -122.4830, note: "1237 JFK Dr — Golden Gate Park" },
-  { id: "alta-plaza",        name: "Alta Plaza",           category: "grass", lat: 37.7912, lng: -122.4377 },
-  { id: "presidio-tunnel-tops", name: "Presidio Tunnel Tops", category: "grass", lat: 37.8029, lng: -122.4559 },
-  { id: "lands-end",         name: "Lands End",            category: "grass", lat: 37.7838, lng: -122.5068 },
-  { id: "peacock-meadow",    name: "Peacock Meadow",       category: "grass", lat: 37.7715, lng: -122.4593, note: "Golden Gate Park" },
-  { id: "bernal-heights",    name: "Bernal Heights",       category: "grass", lat: 37.7410, lng: -122.4142 },
+  // ───────── SOAK UP THE SUN ─────────
+  { id: "baker-beach",       name: "Baker Beach",          category: "sun", lat: 37.7931, lng: -122.4838 },
+  { id: "marina-green",      name: "Marina Green",         category: "sun", lat: 37.8066, lng: -122.4391 },
+  { id: "ocean-beach-sun",   name: "Ocean Beach",          category: "sun", lat: 37.7562, lng: -122.5102 },
+  { id: "golden-gate-park-sun", name: "Golden Gate Park",  category: "sun", lat: 37.7694, lng: -122.4822 },
+  { id: "pan-handle-sun",    name: "The Panhandle",        category: "sun", lat: 37.7717, lng: -122.4513, note: "GG Park's eastern strip" },
+  { id: "crissy-field-sun",  name: "Crissy Field",         category: "sun", lat: 37.8033, lng: -122.4658 },
+  { id: "dolores-park-sun",  name: "Dolores Park",         category: "sun", lat: 37.7597, lng: -122.4271 },
+  { id: "fort-funston",      name: "Fort Funston",         category: "sun", lat: 37.7191, lng: -122.5033 },
+  { id: "marshalls-beach",   name: "Marshall's Beach",     category: "sun", lat: 37.8019, lng: -122.4793, note: "below the Presidio cliffs" },
+  { id: "palace-of-fine-arts-sun", name: "Palace of Fine Arts", category: "sun", lat: 37.8029, lng: -122.4485, addedAt: "2026-05-18" },
+  { id: "sutro-baths",       name: "Sutro Baths",          category: "sun", lat: 37.7803, lng: -122.5136, addedAt: "2026-05-18" },
+  { id: "hellman-hollow",    name: "Hellman Hollow",       category: "sun", lat: 37.7692, lng: -122.4857, note: "Golden Gate Park", addedAt: "2026-05-18" },
+  { id: "alamo-square-park", name: "Alamo Square Park",    category: "sun", lat: 37.7764, lng: -122.4347, addedAt: "2026-05-18" },
+  { id: "lafayette-park-sun",name: "Lafayette Park",       category: "sun", lat: 37.7915, lng: -122.4279, addedAt: "2026-05-18" },
+  { id: "fort-mason-sun",    name: "Fort Mason",           category: "sun", lat: 37.8063, lng: -122.4290, addedAt: "2026-05-18" },
+  { id: "francisco-park",    name: "Francisco Park",       category: "sun", lat: 37.8039, lng: -122.4209, addedAt: "2026-05-18" },
   // <ADD_PLACES_HERE>  ← do not remove. `npm run add` inserts new entries above this line.
 ];
 

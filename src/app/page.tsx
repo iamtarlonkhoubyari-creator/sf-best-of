@@ -1,8 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState } from "react";
-import { CATEGORIES, type CategoryId, type Place } from "@/data/places";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { CATEGORIES, PLACES, type CategoryId, type Place } from "@/data/places";
 import BridgeIcon from "@/components/BridgeIcon";
 
 // Leaflet uses window — load only on the client.
@@ -18,24 +18,178 @@ const Map = dynamic(() => import("@/components/Map"), {
 const X_URL = "https://x.com/TarlonKhoubyari";
 const LINKEDIN_URL = "https://www.linkedin.com/in/tarlon-khoubyari/";
 
+const PLACEHOLDERS = [
+  "search…",
+  "try \"horsefeather\"",
+  "where to cry?",
+  "near the bridge",
+  "best cappuccino",
+  "a spot to be camera off",
+];
+
+function useNewSinceLastVisit() {
+  const [state, setState] = useState<{
+    ready: boolean;
+    lastVisit: string | null;
+  }>({ ready: false, lastVisit: null });
+
+  useEffect(() => {
+    let stored: string | null = null;
+    try {
+      stored = localStorage.getItem("sf-best-of:lastVisit");
+    } catch {}
+    setState({ ready: true, lastVisit: stored });
+    const t = setTimeout(() => {
+      try {
+        localStorage.setItem(
+          "sf-best-of:lastVisit",
+          new Date().toISOString().slice(0, 10),
+        );
+      } catch {}
+    }, 6000);
+    return () => clearTimeout(t);
+  }, []);
+
+  const isNew = useCallback(
+    (place: Place) => {
+      if (!state.ready || !place.addedAt) return false;
+      if (!state.lastVisit) {
+        const thirty = new Date(Date.now() - 30 * 24 * 3600 * 1000)
+          .toISOString()
+          .slice(0, 10);
+        return place.addedAt > thirty;
+      }
+      return place.addedAt > state.lastVisit;
+    },
+    [state],
+  );
+
+  return { isNew };
+}
+
+function matchesQuery(p: Place, q: string): boolean {
+  if (!q.trim()) return true;
+  const cat = CATEGORIES.find((c) => c.id === p.category);
+  const haystack = `${p.name} ${p.note ?? ""} ${cat?.label ?? ""} ${cat?.longLabel ?? ""}`.toLowerCase();
+  return haystack.includes(q.toLowerCase().trim());
+}
+
 export default function Home() {
   const [active, setActive] = useState<Set<CategoryId>>(
     () => new Set(CATEGORIES.map((c) => c.id)),
   );
   const [selected, setSelected] = useState<Place | null>(null);
+  const [flyTo, setFlyTo] = useState<{
+    place: Place;
+    nonce: number;
+    duration: number;
+    pulse?: boolean;
+  } | null>(null);
+
+  const [query, setQuery] = useState("");
+  const [showNewOnly, setShowNewOnly] = useState(false);
+  const [paletteOpen, setPaletteOpen] = useState(false);
+  const [phIdx, setPhIdx] = useState(0);
+
+  const { isNew } = useNewSinceLastVisit();
+
+  // rotate placeholder while empty
+  useEffect(() => {
+    if (query) return;
+    const t = setInterval(
+      () => setPhIdx((i) => (i + 1) % PLACEHOLDERS.length),
+      3400,
+    );
+    return () => clearInterval(t);
+  }, [query]);
+
+  // ⌘K / Ctrl+K opens the palette
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setPaletteOpen((o) => !o);
+      } else if (e.key === "Escape") {
+        setPaletteOpen(false);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   const toggle = (id: CategoryId) => {
+    setShowNewOnly(false);
     setActive((prev) => {
       const next = new Set(prev);
       if (next.has(id)) next.delete(id);
       else next.add(id);
-      // never allow zero — at least one category on
       if (next.size === 0) next.add(id);
       return next;
     });
   };
 
-  const selectAll = () => setActive(new Set(CATEGORIES.map((c) => c.id)));
+  const selectAll = () => {
+    setShowNewOnly(false);
+    setActive(new Set(CATEGORIES.map((c) => c.id)));
+  };
+
+  const placeCounts = useMemo(() => {
+    const counts = {} as Record<CategoryId, number>;
+    for (const c of CATEGORIES) counts[c.id] = 0;
+    for (const p of PLACES) counts[p.category]++;
+    return counts;
+  }, []);
+
+  const newCounts = useMemo(() => {
+    const counts = {} as Record<CategoryId, number>;
+    for (const c of CATEGORIES) counts[c.id] = 0;
+    for (const p of PLACES) if (isNew(p)) counts[p.category]++;
+    return counts;
+  }, [isNew]);
+
+  const newTotal = useMemo(
+    () => PLACES.filter((p) => isNew(p)).length,
+    [isNew],
+  );
+
+  const totalCount = PLACES.length;
+  const allActive = active.size === CATEGORIES.length;
+
+  const visiblePlaces = useMemo(() => {
+    return PLACES.filter((p) => {
+      if (showNewOnly) {
+        if (!isNew(p)) return false;
+      } else {
+        if (!active.has(p.category)) return false;
+      }
+      if (!matchesQuery(p, query)) return false;
+      return true;
+    });
+  }, [active, showNewOnly, isNew, query]);
+
+  const luckyPick = () => {
+    if (!visiblePlaces.length) return;
+    const place =
+      visiblePlaces[Math.floor(Math.random() * visiblePlaces.length)];
+    setSelected(place);
+    setFlyTo({
+      place,
+      nonce: performance.now(),
+      duration: 0.9,
+      pulse: true,
+    });
+  };
+
+  const pickFromPalette = (place: Place) => {
+    setSelected(place);
+    setFlyTo({
+      place,
+      nonce: performance.now(),
+      duration: 0.9,
+      pulse: true,
+    });
+    setPaletteOpen(false);
+  };
 
   return (
     <main className="relative flex flex-col flex-1 min-h-screen">
@@ -66,36 +220,112 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Category chips */}
-      <nav className="px-4 sm:px-8 pb-3 z-[1000]">
-        <div className="flex gap-2 overflow-x-auto no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
-          <Chip
-            label="all"
-            emoji="✨"
-            color="var(--ink)"
-            active={active.size === CATEGORIES.length}
-            onClick={selectAll}
-          />
-          {CATEGORIES.map((c) => (
-            <Chip
-              key={c.id}
-              label={c.label}
-              emoji={c.emoji}
-              color={c.color}
-              active={active.has(c.id)}
-              onClick={() => toggle(c.id)}
+      {/* Body: sidebar + map */}
+      <div className="flex-1 flex flex-col md:flex-row gap-3 md:gap-5 px-4 sm:px-8 pb-4 min-h-0">
+        <aside className="md:w-60 lg:w-72 shrink-0 z-[1000]">
+          {/* Search input */}
+          <div className="relative mb-1.5">
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                if (e.target.value) setShowNewOnly(false);
+              }}
+              placeholder={PLACEHOLDERS[phIdx]}
+              className="w-full bg-[var(--paper)]/85 backdrop-blur-sm border border-[var(--ink)]/15 rounded-full pl-3.5 pr-12 py-1.5 text-sm placeholder:text-[var(--ink)]/40 focus:outline-none focus:border-[var(--ink)]/40 transition"
+              aria-label="search places"
             />
-          ))}
-        </div>
-      </nav>
+            <kbd
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] font-mono bg-[var(--ink)]/10 text-[var(--ink)]/55 px-1.5 py-0.5 rounded"
+              title="open the command palette"
+            >
+              ⌘K
+            </kbd>
+          </div>
 
-      {/* Map */}
-      <section className="relative flex-1 mx-4 sm:mx-8 mb-4 rounded-3xl overflow-hidden border-2 border-[var(--ink)]/10 shadow-[0_10px_40px_-10px_rgba(46,36,56,0.25)]">
-        <Map active={active} onSelect={setSelected} />
-      </section>
+          <div className="flex items-center gap-3 text-[10px] mb-3 pl-1">
+            <button
+              onClick={luckyPick}
+              className="text-[var(--ink)]/60 hover:text-[var(--ink)] italic transition"
+            >
+              i&rsquo;m feeling lucky →
+            </button>
+            {newTotal > 0 && (
+              <button
+                onClick={() => {
+                  setShowNewOnly((s) => !s);
+                  setQuery("");
+                }}
+                className={`ml-auto inline-flex items-center gap-1 transition ${showNewOnly ? "text-[var(--ink)] font-medium" : "text-[var(--ink)]/60 hover:text-[var(--ink)]"}`}
+              >
+                <span className="text-sm">✨</span>
+                <span>
+                  {newTotal} new{showNewOnly ? " · clear" : ""}
+                </span>
+              </button>
+            )}
+          </div>
+
+          <div className="flex items-baseline justify-between mb-1.5">
+            <h2 className="font-display italic text-sm text-[var(--ink)]/55">
+              the menu
+            </h2>
+            <span className="text-[9px] uppercase tracking-[0.18em] opacity-45">
+              tap to filter
+            </span>
+          </div>
+          <ol className="space-y-0">
+            <MenuItem
+              n={0}
+              label="all"
+              count={totalCount}
+              newCount={newTotal}
+              color="#2E2438"
+              active={!showNewOnly && allActive}
+              onClick={selectAll}
+            />
+            {CATEGORIES.map((c, i) => (
+              <MenuItem
+                key={c.id}
+                n={i + 1}
+                label={c.label.toLowerCase()}
+                emoji={c.emoji}
+                count={placeCounts[c.id]}
+                newCount={newCounts[c.id]}
+                color={c.color}
+                active={!showNewOnly && !allActive && active.has(c.id)}
+                onClick={() => toggle(c.id)}
+              />
+            ))}
+          </ol>
+        </aside>
+
+        <section className="relative flex-1 min-h-[60vh] md:min-h-0 rounded-3xl overflow-hidden border-2 border-[var(--ink)]/10 shadow-[0_10px_40px_-10px_rgba(46,36,56,0.25)]">
+          <Map
+            visible={visiblePlaces}
+            onSelect={setSelected}
+            flyTo={flyTo}
+          />
+        </section>
+      </div>
+
+      {/* Command palette (⌘K) */}
+      <CommandPalette
+        open={paletteOpen}
+        onClose={() => setPaletteOpen(false)}
+        onPick={pickFromPalette}
+        isNew={isNew}
+      />
 
       {/* Detail sheet */}
-      {selected && <DetailSheet place={selected} onClose={() => setSelected(null)} />}
+      {selected && (
+        <DetailSheet
+          place={selected}
+          isNew={isNew(selected)}
+          onClose={() => setSelected(null)}
+        />
+      )}
 
       {/* Tiny footer */}
       <footer className="px-4 sm:px-8 pb-4 text-xs opacity-60 flex items-center justify-between flex-wrap gap-2">
@@ -108,41 +338,191 @@ export default function Home() {
   );
 }
 
-function Chip({
+function MenuItem({
+  n,
   label,
   emoji,
+  count,
+  newCount = 0,
   color,
   active,
   onClick,
 }: {
+  n: number;
   label: string;
-  emoji: string;
+  emoji?: string;
+  count: number;
+  newCount?: number;
   color: string;
   active: boolean;
   onClick: () => void;
 }) {
   return (
-    <button
-      onClick={onClick}
-      className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border-2 text-sm font-medium transition-all"
-      style={{
-        borderColor: active ? color : "rgba(46,36,56,0.15)",
-        background: active ? color : "var(--paper)",
-        color: active ? "white" : "var(--ink)",
-        boxShadow: active ? "0 4px 14px -4px " + color : "none",
-      }}
+    <li>
+      <button
+        onClick={onClick}
+        className={`menu-item w-full flex items-baseline gap-2 py-[3px] text-left ${active ? "is-active" : ""}`}
+        style={{ ["--menu-color" as string]: color }}
+      >
+        <span className="menu-number font-display tabular-nums text-xs w-6 text-right">
+          {String(n).padStart(2, "0")}.
+        </span>
+        <span className="menu-label-wrapper font-display italic text-base">
+          {label}
+        </span>
+        {newCount > 0 && (
+          <span
+            className="menu-new-badge"
+            style={{ background: color }}
+            title={`${newCount} new`}
+          >
+            +{newCount}
+          </span>
+        )}
+        <span className="flex-1" />
+        <span className="menu-count text-[10px] tabular-nums">{count}</span>
+        {emoji && (
+          <span className="menu-emoji text-xs w-4 text-center">{emoji}</span>
+        )}
+      </button>
+    </li>
+  );
+}
+
+function CommandPalette({
+  open,
+  onClose,
+  onPick,
+  isNew,
+}: {
+  open: boolean;
+  onClose: () => void;
+  onPick: (p: Place) => void;
+  isNew: (p: Place) => boolean;
+}) {
+  const [q, setQ] = useState("");
+  const [cursor, setCursor] = useState(0);
+
+  useEffect(() => {
+    if (open) {
+      setQ("");
+      setCursor(0);
+    }
+  }, [open]);
+
+  const results = useMemo(() => {
+    if (!open) return [] as Place[];
+    return PLACES.filter((p) => matchesQuery(p, q)).slice(0, 40);
+  }, [open, q]);
+
+  useEffect(() => {
+    setCursor(0);
+  }, [q]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setCursor((c) => Math.min(c + 1, results.length - 1));
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setCursor((c) => Math.max(c - 1, 0));
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        const p = results[cursor];
+        if (p) onPick(p);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, results, cursor, onPick]);
+
+  if (!open) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-[3000] flex items-start justify-center pt-[14vh] px-4 bg-[var(--ink)]/40 backdrop-blur-sm sheet-in"
+      onClick={onClose}
     >
-      <span>{emoji}</span>
-      <span className="whitespace-nowrap">{label}</span>
-    </button>
+      <div
+        className="w-full max-w-xl bg-[var(--paper)] rounded-2xl shadow-[0_24px_60px_-12px_rgba(46,36,56,0.45)] border border-[var(--ink)]/10 overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-[var(--ink)]/8">
+          <span className="text-[var(--ink)]/40 text-sm">⌕</span>
+          <input
+            autoFocus
+            type="text"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="search the whole map…"
+            className="flex-1 bg-transparent text-base focus:outline-none placeholder:text-[var(--ink)]/35"
+          />
+          <kbd className="text-[10px] font-mono text-[var(--ink)]/50 bg-[var(--ink)]/8 px-1.5 py-0.5 rounded">
+            esc
+          </kbd>
+        </div>
+        <div className="max-h-[55vh] overflow-y-auto">
+          {results.length === 0 ? (
+            <div className="px-4 py-8 text-sm text-[var(--ink)]/50 italic text-center">
+              nothing matches &ldquo;{q}&rdquo;
+            </div>
+          ) : (
+            <ul>
+              {results.map((p, i) => {
+                const cat = CATEGORIES.find((c) => c.id === p.category)!;
+                return (
+                  <li key={p.id}>
+                    <button
+                      onMouseEnter={() => setCursor(i)}
+                      onClick={() => onPick(p)}
+                      className={`w-full flex items-center gap-3 px-4 py-2.5 text-left transition ${i === cursor ? "bg-[var(--ink)]/6" : ""}`}
+                    >
+                      <span
+                        className="w-1.5 h-8 rounded-full shrink-0"
+                        style={{ background: cat.color }}
+                      />
+                      <span className="text-lg shrink-0">{cat.emoji}</span>
+                      <span className="flex-1 min-w-0">
+                        <span className="font-display text-base font-semibold block leading-tight truncate">
+                          {p.name}
+                          {isNew(p) && (
+                            <span className="ml-1.5 text-[9px] uppercase tracking-wide font-semibold opacity-70">
+                              ✨ new
+                            </span>
+                          )}
+                        </span>
+                        <span className="text-xs opacity-60 truncate block">
+                          {cat.label}
+                          {p.note ? ` · ${p.note}` : ""}
+                        </span>
+                      </span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
+        <div className="px-4 py-2 border-t border-[var(--ink)]/8 flex items-center justify-between text-[10px] text-[var(--ink)]/50">
+          <span>
+            ↑↓ navigate · ↵ open · esc close
+          </span>
+          <span className="font-display italic">{results.length} matches</span>
+        </div>
+      </div>
+    </div>
   );
 }
 
 function DetailSheet({
   place,
+  isNew,
   onClose,
 }: {
   place: Place;
+  isNew: boolean;
   onClose: () => void;
 }) {
   const cat = CATEGORIES.find((c) => c.id === place.category)!;
@@ -152,7 +532,7 @@ function DetailSheet({
   return (
     <div
       role="dialog"
-      className="fixed inset-x-0 bottom-0 z-[2000] sm:inset-x-auto sm:right-6 sm:bottom-6 sm:max-w-sm"
+      className="sheet-in fixed inset-x-0 bottom-0 z-[2000] sm:inset-x-auto sm:right-6 sm:bottom-6 sm:max-w-sm"
     >
       <div
         className="bg-[var(--paper)] rounded-t-3xl sm:rounded-3xl p-5 shadow-[0_-10px_40px_rgba(46,36,56,0.18)] border-2 border-[var(--ink)]/10"
@@ -160,8 +540,18 @@ function DetailSheet({
       >
         <div className="flex items-start justify-between gap-3">
           <div>
-            <div className="text-xs uppercase tracking-wider opacity-60">
-              {cat.emoji} {cat.longLabel}
+            <div className="text-xs uppercase tracking-wider opacity-60 flex items-center gap-2">
+              <span>
+                {cat.emoji} {cat.longLabel}
+              </span>
+              {isNew && (
+                <span
+                  className="text-[9px] uppercase font-semibold px-1.5 py-0.5 rounded-full"
+                  style={{ background: cat.color, color: "white" }}
+                >
+                  ✨ new
+                </span>
+              )}
             </div>
             <h2
               className="font-display text-4xl sm:text-5xl leading-[1] mt-1 font-semibold"
