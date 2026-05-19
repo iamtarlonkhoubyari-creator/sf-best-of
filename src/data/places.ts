@@ -177,6 +177,19 @@ export const PLACES: Place[] = [
   { id: "lafayette-park-sun",name: "Lafayette Park",       category: "sun", lat: 37.7915, lng: -122.4279, addedAt: "2026-05-18" },
   { id: "fort-mason-sun",    name: "Fort Mason",           category: "sun", lat: 37.8063, lng: -122.4290, addedAt: "2026-05-18" },
   { id: "francisco-park",    name: "Francisco Park",       category: "sun", lat: 37.8039, lng: -122.4209, addedAt: "2026-05-18" },
+  { id: "andytown-jackson-square", name: "Andytown", category: "cappuccinos", lat: 37.7971, lng: -122.4027, note: "437 Pacific Ave — Jackson Square", addedAt: "2026-05-19" },
+  { id: "comptons-coffee",   name: "Compton's Coffee",      category: "cappuccinos", lat: 37.7874, lng: -122.4334, note: "1910 Fillmore", addedAt: "2026-05-19" },
+  { id: "native-twins",      name: "Native Twins",          category: "cappuccinos", lat: 37.7910, lng: -122.4290, note: "near Lafayette Park", needsReview: true, addedAt: "2026-05-19" },
+  { id: "motoring-coffee",   name: "Motoring Coffee",       category: "cappuccinos", lat: 37.7943, lng: -122.4183, needsReview: true, addedAt: "2026-05-19" },
+  { id: "verve-mission",     name: "Verve Coffee",          category: "cappuccinos", lat: 37.7671, lng: -122.4291, note: "Mission", addedAt: "2026-05-19" },
+  { id: "the-social-study",  name: "The Social Study",      category: "cappuccinos", lat: 37.7842, lng: -122.4325, addedAt: "2026-05-19" },
+  { id: "jane-on-fillmore",  name: "Jane on Fillmore",      category: "cappuccinos", lat: 37.7894, lng: -122.4341, addedAt: "2026-05-19" },
+  { id: "coit-tower-cry",    name: "Coit Tower",                  category: "cry",   lat: 37.8024, lng: -122.4058, addedAt: "2026-05-19" },
+  { id: "fort-mason-cry",    name: "Fort Mason",                  category: "cry",   lat: 37.8063, lng: -122.4290, addedAt: "2026-05-19" },
+  { id: "presidio-cry",      name: "Presidio",                    category: "cry",   lat: 37.7987, lng: -122.4646, addedAt: "2026-05-19" },
+  { id: "coit-tower-crash",  name: "Coit Tower",                  category: "crash", lat: 37.8024, lng: -122.4058, addedAt: "2026-05-19" },
+  { id: "presidio-crash",    name: "Presidio",                    category: "crash", lat: 37.7987, lng: -122.4646, addedAt: "2026-05-19" },
+  { id: "gg-bridge-vista",   name: "Golden Gate Bridge Vista Point", category: "crash", lat: 37.8074, lng: -122.4750, note: "SF-side overlook", addedAt: "2026-05-19" },
   // <ADD_PLACES_HERE>  ← do not remove. `npm run add` inserts new entries above this line.
 ];
 
