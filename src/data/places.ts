@@ -190,6 +190,10 @@ export const PLACES: Place[] = [
   { id: "coit-tower-crash",  name: "Coit Tower",                  category: "crash", lat: 37.8024, lng: -122.4058, addedAt: "2026-05-19" },
   { id: "presidio-crash",    name: "Presidio",                    category: "crash", lat: 37.7987, lng: -122.4646, addedAt: "2026-05-19" },
   { id: "gg-bridge-vista",   name: "Golden Gate Bridge Vista Point", category: "crash", lat: 37.8074, lng: -122.4750, note: "SF-side overlook", addedAt: "2026-05-19" },
+  { id: "cotogna",        name: "Cotogna",        category: "dinner", lat: 37.7974, lng: -122.4035, note: "490 Pacific Ave", addedAt: "2026-05-21" },
+  { id: "barrel-room",    name: "Barrel Room",    category: "dinner", lat: 37.7942, lng: -122.4015, addedAt: "2026-05-21" },
+  { id: "tap-room",       name: "Tap Room",       category: "dinner", lat: 37.7889, lng: -122.4087, addedAt: "2026-05-21" },
+  { id: "prelude",        name: "Prelude",        category: "dinner", lat: 37.7849, lng: -122.4194, needsReview: true, addedAt: "2026-05-21" },
   // <ADD_PLACES_HERE>  ← do not remove. `npm run add` inserts new entries above this line.
 ];
 
