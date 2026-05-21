@@ -94,7 +94,7 @@ export const PLACES: Place[] = [
   { id: "horsefeather",  name: "Horsefeather",     category: "bars", lat: 37.7740, lng: -122.4374, note: "528 Divisadero" },
   { id: "the-interval",  name: "The Interval",     category: "bars", lat: 37.8062, lng: -122.4310, note: "Long Now @ Fort Mason" },
   { id: "union-larder",  name: "Union Larder",     category: "bars", lat: 37.7988, lng: -122.4192, note: "1945 Hyde St" },
-  { id: "celeste",       name: "Celeste",          category: "bars", lat: 37.7991, lng: -122.4080, note: "522 Columbus" },
+  { id: "celeste",       name: "Celeste",          category: "bars", lat: 37.7976, lng: -122.4314, note: "Union St", needsReview: true },
   { id: "harper-rye",    name: "Harper + Rye",     category: "bars", lat: 37.7922, lng: -122.4213, note: "1695 Polk St" },
   { id: "side-a",        name: "Side A",           category: "bars", lat: 37.7607, lng: -122.4117, note: "2814 19th St" },
   { id: "buddy",         name: "Buddy",            category: "bars", lat: 37.7693, lng: -122.4290, note: "Church / Duboce" },
@@ -195,6 +195,10 @@ export const PLACES: Place[] = [
   { id: "tap-room",       name: "Tap Room",       category: "dinner", lat: 37.7889, lng: -122.4087, addedAt: "2026-05-21" },
   { id: "prelude",        name: "Prelude",        category: "dinner", lat: 37.7849, lng: -122.4194, needsReview: true, addedAt: "2026-05-21" },
   { id: "the-post-room",  name: "The Post Room",  category: "dinner", lat: 37.7849, lng: -122.4194, needsReview: true, addedAt: "2026-05-21" },
+  { id: "camino-alto",    name: "Camino Alto",    category: "dinner", lat: 37.7849, lng: -122.4194, needsReview: true, addedAt: "2026-05-21" },
+  { id: "angler",         name: "Angler",         category: "dinner", lat: 37.7931, lng: -122.3922, note: "132 The Embarcadero", addedAt: "2026-05-21" },
+  { id: "piccino-2",      name: "Piccino (2nd location)", category: "dinner", lat: 37.7577, lng: -122.3900, needsReview: true, addedAt: "2026-05-21" },
+  { id: "coffee-movement", name: "The Coffee Movement", category: "cappuccinos", lat: 37.7948, lng: -122.4103, addedAt: "2026-05-21" },
   // <ADD_PLACES_HERE>  ← do not remove. `npm run add` inserts new entries above this line.
 ];
 

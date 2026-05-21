@@ -90,6 +90,8 @@ export default function Home() {
   const [showNewOnly, setShowNewOnly] = useState(false);
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [phIdx, setPhIdx] = useState(0);
+  const [bannerVisible, setBannerVisible] = useState(false);
+  const [bannerDismissed, setBannerDismissed] = useState(false);
 
   const { isNew } = useNewSinceLastVisit();
 
@@ -152,6 +154,14 @@ export default function Home() {
     [isNew],
   );
 
+  // surface a top banner when returning visitors land on the page
+  useEffect(() => {
+    if (newTotal <= 0 || bannerDismissed) return;
+    setBannerVisible(true);
+    const t = setTimeout(() => setBannerVisible(false), 9000);
+    return () => clearTimeout(t);
+  }, [newTotal, bannerDismissed]);
+
   const totalCount = PLACES.length;
   const allActive = active.size === CATEGORIES.length;
 
@@ -193,6 +203,38 @@ export default function Home() {
 
   return (
     <main className="relative flex flex-col flex-1 min-h-screen">
+      {/* "what's new" top banner */}
+      <div className="fixed inset-x-0 top-3 sm:top-4 z-[2500] flex justify-center pointer-events-none px-4">
+        <div
+          className={`new-banner ${bannerVisible && !bannerDismissed && newTotal > 0 ? "is-visible" : ""}`}
+        >
+          <button
+            onClick={() => {
+              setShowNewOnly(true);
+              setBannerVisible(false);
+              setBannerDismissed(true);
+            }}
+            className="inline-flex items-center gap-2 pointer-events-auto"
+          >
+            <span className="text-base">✨</span>
+            <span>
+              {newTotal} new spot{newTotal === 1 ? "" : "s"} since you were last here
+            </span>
+            <span className="opacity-70">→</span>
+          </button>
+          <button
+            onClick={() => {
+              setBannerVisible(false);
+              setBannerDismissed(true);
+            }}
+            aria-label="dismiss"
+            className="ml-2 opacity-60 hover:opacity-100 pointer-events-auto"
+          >
+            ✕
+          </button>
+        </div>
+      </div>
+
       {/* Header */}
       <header className="px-4 pt-5 pb-4 sm:px-8 sm:pt-7 z-[1000]">
         <BridgeIcon className="w-44 sm:w-56 h-auto -mb-2 -ml-1 -rotate-1" />
