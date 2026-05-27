@@ -18,14 +18,53 @@ const Map = dynamic(() => import("@/components/Map"), {
 const X_URL = "https://x.com/TarlonKhoubyari";
 const LINKEDIN_URL = "https://www.linkedin.com/in/tarlon-khoubyari/";
 
-const HOUSING_LINKS: { label: string; href?: string; note?: string }[] = [
-  { label: "listingsproject.com", href: "https://www.listingsproject.com", note: "curated newsletter" },
-  { label: "directorysf.com", href: "https://directorysf.com" },
-  { label: "@theapartmentplugsf", href: "https://www.instagram.com/theapartmentplugsf/", note: "instagram" },
-  { label: "craigslist", href: "https://sfbay.craigslist.org/search/apa", note: "SF Bay rentals" },
-  { label: "SF Crew", note: "fb group — search on facebook" },
-  { label: "SF Housing", note: "fb group — search on facebook" },
-  { label: "Bay Area Rentals", note: "fb group — search on facebook" },
+const HOUSING_INTRO =
+  "start with listingsproject and the apartment plug. fb groups when you're desperate.";
+
+const HOUSING_LINKS: {
+  label: string;
+  href?: string;
+  description: string;
+}[] = [
+  {
+    label: "listingsproject.com",
+    href: "https://www.listingsproject.com",
+    description:
+      "Curated weekly newsletter. Best for creative-leaning rentals — read it Sunday mornings.",
+  },
+  {
+    label: "directorysf.com",
+    href: "https://directorysf.com",
+    description:
+      "Community-built directory of housing co-ops, sublets, and group houses in the city.",
+  },
+  {
+    label: "@theapartmentplugsf",
+    href: "https://www.instagram.com/theapartmentplugsf/",
+    description:
+      "Instagram account that posts SF listings as they pop up. Fast.",
+  },
+  {
+    label: "craigslist",
+    href: "https://sfbay.craigslist.org/search/apa",
+    description:
+      "Loud and chaotic, but you'll find the occasional gem if you check daily.",
+  },
+  {
+    label: "SF Crew",
+    description:
+      "Classic SF community group — listings + roommate requests. Find on Facebook.",
+  },
+  {
+    label: "SF Housing",
+    description:
+      "Higher-volume housing-only group. Lots of noise; lots of options. Find on Facebook.",
+  },
+  {
+    label: "Bay Area Rentals",
+    description:
+      "Broader Bay Area focus — good for East Bay & Peninsula options too. Find on Facebook.",
+  },
 ];
 
 const PLACEHOLDERS = [
@@ -103,6 +142,30 @@ export default function Home() {
   const [bannerVisible, setBannerVisible] = useState(false);
   const [bannerDismissed, setBannerDismissed] = useState(false);
   const [housingOpen, setHousingOpen] = useState(false);
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
+  const [feedbackText, setFeedbackText] = useState("");
+  const [feedbackStatus, setFeedbackStatus] = useState<
+    "idle" | "sending" | "ok" | "error"
+  >("idle");
+
+  const submitFeedback = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const message = feedbackText.trim();
+    if (!message || feedbackStatus === "sending") return;
+    setFeedbackStatus("sending");
+    try {
+      const res = await fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message }),
+      });
+      if (!res.ok) throw new Error("send failed");
+      setFeedbackStatus("ok");
+      setFeedbackText("");
+    } catch {
+      setFeedbackStatus("error");
+    }
+  };
 
   const { isNew } = useNewSinceLastVisit();
 
@@ -375,45 +438,41 @@ export default function Home() {
                 </span>
               </span>
             </button>
-            <ul className={`housing-list space-y-0 mt-1.5 ${housingOpen ? "is-open" : ""}`}>
-              {HOUSING_LINKS.map((link) =>
-                link.href ? (
-                  <li key={link.label}>
-                    <a
-                      href={link.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="housing-link flex items-baseline gap-2 py-[3px] group"
-                    >
-                      <span className="housing-arrow text-[10px] w-3 shrink-0">↗</span>
-                      <span className="housing-label font-display italic text-base">
+            <div className={`housing-list mt-2 ${housingOpen ? "is-open" : ""}`}>
+              <p className="text-[11px] text-[var(--ink)]/65 italic mb-3 leading-snug px-1">
+                {HOUSING_INTRO}
+              </p>
+              <ul className="space-y-3">
+                {HOUSING_LINKS.map((link) => (
+                  <li key={link.label} className="housing-card">
+                    <div className="flex items-baseline justify-between gap-2 mb-0.5">
+                      <span className="font-display italic text-base text-[var(--ink)] leading-tight">
                         {link.label}
                       </span>
-                      {link.note && (
-                        <span className="housing-note text-[10px] opacity-50 italic">
-                          {link.note}
-                        </span>
-                      )}
-                    </a>
-                  </li>
-                ) : (
-                  <li key={link.label}>
-                    <div className="flex items-baseline gap-2 py-[3px]">
-                      <span className="text-[10px] w-3 shrink-0 opacity-30">·</span>
-                      <span className="font-display italic text-base text-[var(--ink)]/55">
-                        {link.label}
-                      </span>
-                      {link.note && (
-                        <span className="text-[10px] opacity-45 italic">
-                          {link.note}
+                      {link.href ? (
+                        <a
+                          href={link.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="housing-visit text-[10px] uppercase tracking-[0.12em] font-semibold text-[var(--ink)]/55 hover:text-[var(--ink)] transition shrink-0"
+                        >
+                          visit ↗
+                        </a>
+                      ) : (
+                        <span className="text-[10px] uppercase tracking-[0.12em] text-[var(--ink)]/35 shrink-0">
+                          fb group
                         </span>
                       )}
                     </div>
+                    <p className="text-[11px] text-[var(--ink)]/60 leading-snug">
+                      {link.description}
+                    </p>
                   </li>
-                ),
-              )}
-            </ul>
+                ))}
+              </ul>
+            </div>
           </div>
+
         </aside>
 
         <section className="relative flex-1 min-h-[60vh] md:min-h-0 rounded-3xl overflow-hidden border-2 border-[var(--ink)]/10 shadow-[0_10px_40px_-10px_rgba(46,36,56,0.25)]">
@@ -424,6 +483,81 @@ export default function Home() {
             flyTo={flyTo}
           />
         </section>
+      </div>
+
+      {/* Floating feedback popup — top-right */}
+      <div className="fixed top-3 right-3 sm:top-5 sm:right-5 z-[2400] max-w-[88vw]">
+        {!feedbackOpen ? (
+          <button
+            onClick={() => setFeedbackOpen(true)}
+            className="feedback-chip inline-flex items-center gap-2 pl-3 pr-4 py-2.5 rounded-2xl bg-[var(--ink)] text-white shadow-[0_14px_30px_-8px_rgba(46,36,56,0.45)] hover:opacity-95 active:scale-[0.98] transition"
+            aria-label="open feedback"
+          >
+            <span className="text-lg leading-none feedback-wave">👋</span>
+            <span className="text-xs font-medium leading-tight whitespace-nowrap">
+              what lists do you want to see?
+            </span>
+          </button>
+        ) : (
+          <div className="feedback-popup bg-[var(--paper)] rounded-2xl shadow-[0_18px_40px_-8px_rgba(46,36,56,0.45)] border border-[var(--ink)]/10 p-4 w-[300px] max-w-full">
+            <div className="flex items-start justify-between gap-2 mb-2">
+              <div className="flex items-center gap-2">
+                <span className="text-base feedback-wave">👋</span>
+                <span className="font-display italic text-sm text-[var(--ink)] leading-tight">
+                  what lists do you want to see?
+                </span>
+              </div>
+              <button
+                onClick={() => {
+                  setFeedbackOpen(false);
+                  setFeedbackStatus("idle");
+                  setFeedbackText("");
+                }}
+                aria-label="close"
+                className="text-[var(--ink)]/40 hover:text-[var(--ink)] text-sm shrink-0 leading-none mt-0.5"
+              >
+                ✕
+              </button>
+            </div>
+            {feedbackStatus === "ok" ? (
+              <div className="text-sm italic text-[var(--ink)]/70 py-3 flex items-center gap-2">
+                <span className="text-lg">✨</span>
+                <span>thanks — got it</span>
+              </div>
+            ) : (
+              <form onSubmit={submitFeedback} className="space-y-2">
+                <textarea
+                  value={feedbackText}
+                  onChange={(e) => setFeedbackText(e.target.value)}
+                  placeholder="more bars in north beach? lists by neighborhood?"
+                  rows={3}
+                  maxLength={2000}
+                  autoFocus
+                  className="w-full text-sm bg-white border border-[var(--ink)]/15 rounded-lg p-2 focus:outline-none focus:border-[var(--ink)]/40 transition resize-none placeholder:text-[var(--ink)]/35 placeholder:italic"
+                />
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-[10px] opacity-50 italic">
+                    anonymous · no email
+                  </span>
+                  <button
+                    type="submit"
+                    disabled={
+                      !feedbackText.trim() || feedbackStatus === "sending"
+                    }
+                    className="text-[10px] uppercase tracking-[0.12em] font-semibold bg-[var(--ink)] text-white px-3 py-1.5 rounded-full hover:opacity-90 disabled:opacity-40 transition"
+                  >
+                    {feedbackStatus === "sending" ? "sending…" : "send →"}
+                  </button>
+                </div>
+                {feedbackStatus === "error" && (
+                  <p className="text-[10px] text-[var(--rose)] italic">
+                    didn&rsquo;t send — try again in a sec
+                  </p>
+                )}
+              </form>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Command palette (⌘K) */}

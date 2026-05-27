@@ -277,9 +277,46 @@ body {
   transition: max-height 360ms cubic-bezier(.22,1,.36,1), opacity 220ms ease;
 }
 .housing-list.is-open {
-  max-height: 400px;
+  max-height: 1200px;
   opacity: 1;
   transition: max-height 380ms cubic-bezier(.22,1,.36,1), opacity 260ms ease 100ms;
+}
+
+/* "finding a place" rich cards */
+.housing-card {
+  padding: 8px 10px;
+  border-radius: 10px;
+  border-left: 2px solid rgba(46, 36, 56, 0.12);
+  transition: border-color 200ms ease, background 200ms ease;
+}
+.housing-card:hover {
+  border-left-color: var(--ink);
+  background: rgba(46, 36, 56, 0.03);
+}
+.housing-visit:hover { letter-spacing: 0.18em; }
+
+/* Feedback popup — 👋 waves on idle, popup fades in */
+@keyframes handWave {
+  0%, 60%, 100% { transform: rotate(0); }
+  10%, 30%      { transform: rotate(-14deg); }
+  20%, 40%      { transform: rotate(10deg); }
+}
+.feedback-wave {
+  display: inline-block;
+  transform-origin: 70% 70%;
+  animation: handWave 2.6s ease-in-out infinite;
+  animation-delay: 1.4s;
+}
+@keyframes feedbackPopIn {
+  from { opacity: 0; transform: translateY(-6px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.feedback-popup {
+  animation: feedbackPopIn 240ms cubic-bezier(.22,1,.36,1);
+  transform-origin: top right;
+}
+.feedback-chip {
+  animation: feedbackPopIn 320ms cubic-bezier(.22,1,.36,1);
 }
 
 .housing-link { cursor: pointer; }
