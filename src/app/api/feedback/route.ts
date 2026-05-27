@@ -13,9 +13,25 @@ export async function POST(req: Request) {
   if (!message) {
     return Response.json({ error: "empty message" }, { status: 400 });
   }
-  console.log(
-    `[feedback ${new Date().toISOString()}]`,
-    JSON.stringify({ message }),
-  );
+
+  const at = new Date().toISOString();
+  console.log(`[feedback ${at}]`, JSON.stringify({ message }));
+
+  // Forward to a Google Sheet via an Apps Script web app
+  const webhook = process.env.FEEDBACK_WEBHOOK_URL;
+  if (webhook) {
+    try {
+      await fetch(webhook, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ at, message }),
+        redirect: "follow",
+      });
+    } catch (err) {
+      console.error("[feedback webhook error]", err);
+      // best-effort: don't fail the user submission
+    }
+  }
+
   return Response.json({ ok: true });
 }
