@@ -18,6 +18,16 @@ const Map = dynamic(() => import("@/components/Map"), {
 const X_URL = "https://x.com/TarlonKhoubyari";
 const LINKEDIN_URL = "https://www.linkedin.com/in/tarlon-khoubyari/";
 
+const HOUSING_LINKS: { label: string; href?: string; note?: string }[] = [
+  { label: "listingsproject.com", href: "https://www.listingsproject.com", note: "curated newsletter" },
+  { label: "directorysf.com", href: "https://directorysf.com" },
+  { label: "@theapartmentplugsf", href: "https://www.instagram.com/theapartmentplugsf/", note: "instagram" },
+  { label: "craigslist", href: "https://sfbay.craigslist.org/search/apa", note: "SF Bay rentals" },
+  { label: "SF Crew", note: "fb group — search on facebook" },
+  { label: "SF Housing", note: "fb group — search on facebook" },
+  { label: "Bay Area Rentals", note: "fb group — search on facebook" },
+];
+
 const PLACEHOLDERS = [
   "search…",
   "try \"horsefeather\"",
@@ -92,6 +102,7 @@ export default function Home() {
   const [phIdx, setPhIdx] = useState(0);
   const [bannerVisible, setBannerVisible] = useState(false);
   const [bannerDismissed, setBannerDismissed] = useState(false);
+  const [housingOpen, setHousingOpen] = useState(false);
 
   const { isNew } = useNewSinceLastVisit();
 
@@ -264,7 +275,7 @@ export default function Home() {
 
       {/* Body: sidebar + map */}
       <div className="flex-1 flex flex-col md:flex-row gap-3 md:gap-5 px-4 sm:px-8 pb-4 min-h-0">
-        <aside className="md:w-60 lg:w-72 shrink-0 z-[1000]">
+        <aside className="md:w-60 lg:w-72 shrink-0 z-[1000] md:overflow-y-auto md:max-h-full no-scrollbar md:pb-2">
           {/* Search input */}
           <div className="relative mb-1.5">
             <input
@@ -341,6 +352,68 @@ export default function Home() {
               />
             ))}
           </ol>
+
+          {/* Resources — non-map links, collapsible */}
+          <div className="mt-5 pt-4 border-t border-[var(--ink)]/10">
+            <button
+              onClick={() => setHousingOpen((o) => !o)}
+              className="housing-toggle w-full flex items-center justify-between gap-2 px-2.5 py-2 -mx-2 rounded-xl bg-[var(--ink)]/5 hover:bg-[var(--ink)]/10 active:scale-[0.99] transition group"
+              aria-expanded={housingOpen}
+            >
+              <h3 className="font-display italic text-sm text-[var(--ink)] group-hover:translate-x-0.5 transition">
+                finding a place to live in SF
+              </h3>
+              <span className="flex items-center gap-2">
+                <span className="text-[10px] uppercase tracking-[0.14em] text-[var(--ink)]/55 font-semibold">
+                  {housingOpen ? "hide" : `show ${HOUSING_LINKS.length}`}
+                </span>
+                <span
+                  className={`text-[11px] grid place-items-center w-5 h-5 rounded-full bg-[var(--ink)] text-white transition-transform duration-300 ${housingOpen ? "rotate-180" : ""}`}
+                  aria-hidden
+                >
+                  ▾
+                </span>
+              </span>
+            </button>
+            <ul className={`housing-list space-y-0 mt-1.5 ${housingOpen ? "is-open" : ""}`}>
+              {HOUSING_LINKS.map((link) =>
+                link.href ? (
+                  <li key={link.label}>
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="housing-link flex items-baseline gap-2 py-[3px] group"
+                    >
+                      <span className="housing-arrow text-[10px] w-3 shrink-0">↗</span>
+                      <span className="housing-label font-display italic text-base">
+                        {link.label}
+                      </span>
+                      {link.note && (
+                        <span className="housing-note text-[10px] opacity-50 italic">
+                          {link.note}
+                        </span>
+                      )}
+                    </a>
+                  </li>
+                ) : (
+                  <li key={link.label}>
+                    <div className="flex items-baseline gap-2 py-[3px]">
+                      <span className="text-[10px] w-3 shrink-0 opacity-30">·</span>
+                      <span className="font-display italic text-base text-[var(--ink)]/55">
+                        {link.label}
+                      </span>
+                      {link.note && (
+                        <span className="text-[10px] opacity-45 italic">
+                          {link.note}
+                        </span>
+                      )}
+                    </div>
+                  </li>
+                ),
+              )}
+            </ul>
+          </div>
         </aside>
 
         <section className="relative flex-1 min-h-[60vh] md:min-h-0 rounded-3xl overflow-hidden border-2 border-[var(--ink)]/10 shadow-[0_10px_40px_-10px_rgba(46,36,56,0.25)]">
@@ -371,8 +444,8 @@ export default function Home() {
       )}
 
       {/* Tiny footer */}
-      <footer className="px-4 sm:px-8 pb-4 text-xs opacity-60 flex items-center justify-between flex-wrap gap-2">
-        <span>By Tarlon Khoubyari</span>
+      <footer className="px-4 sm:px-8 pt-2 pb-4 text-xs opacity-60 flex items-center justify-between flex-wrap gap-2 shrink-0">
+        <span className="whitespace-nowrap">By Tarlon Khoubyari</span>
         <span className="font-display italic">
           {CATEGORIES.length} categories, always growing.
         </span>

@@ -268,6 +268,60 @@ body {
   filter: none;
 }
 
+/* "finding a place to live" collapsible list */
+.housing-toggle { cursor: pointer; outline: none; }
+.housing-list {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 360ms cubic-bezier(.22,1,.36,1), opacity 220ms ease;
+}
+.housing-list.is-open {
+  max-height: 400px;
+  opacity: 1;
+  transition: max-height 380ms cubic-bezier(.22,1,.36,1), opacity 260ms ease 100ms;
+}
+
+.housing-link { cursor: pointer; }
+.housing-link .housing-arrow {
+  color: rgba(46, 36, 56, 0.35);
+  transition: color 200ms ease, transform 220ms cubic-bezier(.22,1,.36,1);
+}
+.housing-link .housing-label {
+  position: relative;
+  display: inline-block;
+  color: rgba(46, 36, 56, 0.6);
+  transition: color 220ms ease, transform 220ms cubic-bezier(.22,1,.36,1);
+  line-height: 1.05;
+}
+.housing-link .housing-label::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 280ms cubic-bezier(.22,1,.36,1);
+}
+.housing-link .housing-note {
+  transition: color 220ms ease, transform 220ms ease;
+}
+.housing-link:hover .housing-arrow {
+  color: var(--ink);
+  transform: translate(2px, -2px);
+}
+.housing-link:hover .housing-label {
+  color: var(--ink);
+  transform: translateX(4px);
+}
+.housing-link:hover .housing-label::after { transform: scaleX(1); }
+.housing-link:hover .housing-note {
+  color: rgba(46, 36, 56, 0.7);
+  transform: translateX(4px);
+}
+
 /* "+N new" badge on menu items */
 .menu-new-badge {
   display: inline-flex;
