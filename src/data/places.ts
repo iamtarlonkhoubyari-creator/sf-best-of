@@ -113,6 +113,12 @@ export const PLACES: Place[] = [
   { id: "abv",           name: "ABV",              category: "bars", lat: 37.7651, lng: -122.4218, note: "3174 16th St" },
   { id: "fools-errand",  name: "Fool's Errand",    category: "bars", lat: 37.7749, lng: -122.4380, note: "639A Divisadero" },
   { id: "leftdoor",      name: "Left Door",        category: "bars", lat: 37.7976, lng: -122.4314, note: "1905 Union" },
+  { id: "ruby-wine-bar",  name: "Ruby Wine",        category: "bars", lat: 37.7626, lng: -122.3976, note: "1419 18th St — Potrero Hill natural wine", addedAt: "2026-07-14" },
+  { id: "twenty-spot-bar",name: "20 Spot",          category: "bars", lat: 37.7586, lng: -122.4203, note: "3565 20th St — Mission wine bar", addedAt: "2026-07-14" },
+  { id: "starlite",       name: "Starlite",         category: "bars", lat: 37.7889, lng: -122.4086, note: "450 Powell — Beacon Grand rooftop, 21st floor", addedAt: "2026-07-14" },
+  { id: "lobalita",       name: "Lobalita",         category: "bars", lat: 37.8005, lng: -122.4394, note: "2231 Chestnut St — Marina, by the Bar Darling team", addedAt: "2026-07-14" },
+  { id: "el-chato",       name: "El Chato",         category: "bars", lat: 37.7576, lng: -122.4097, note: "2301 Bryant St — Spanish taberna", addedAt: "2026-07-14" },
+  { id: "pearl-6101",     name: "Pearl 6101",       category: "bars", lat: 37.7842, lng: -122.4831, note: "6101 California St — bar seats for walk-ins", addedAt: "2026-07-14" },
 
   // ───────── CRASH OUT ─────────
   { id: "wework-embarcadero", name: "WeWork Embarcadero",  category: "crash", lat: 37.7950, lng: -122.3996 },
