@@ -5,7 +5,8 @@ export type CategoryId =
   | "cry"
   | "dinner"
   | "breakup"
-  | "sun";
+  | "sun"
+  | "solo";
 
 export type Category = {
   id: CategoryId;
@@ -64,6 +65,13 @@ export const CATEGORIES: Category[] = [
     longLabel: "Sun spots",
     emoji: "☀️",
     color: "#E8A33C",
+  },
+  {
+    id: "solo",
+    label: "Solo date spots",
+    longLabel: "Solo date spots",
+    emoji: "🍜",
+    color: "#2FA8A0",
   },
 ];
 
@@ -199,6 +207,14 @@ export const PLACES: Place[] = [
   { id: "coffee-movement", name: "The Coffee Movement", category: "cappuccinos", lat: 37.7948, lng: -122.4103, addedAt: "2026-05-21" },
   { id: "pier-14",        name: "Pier 14",        category: "sun",   lat: 37.7940, lng: -122.3906, addedAt: "2026-05-22" },
   { id: "pier-7",         name: "Pier 7",         category: "crash", lat: 37.7994, lng: -122.3955, addedAt: "2026-05-22" },
+  // ───────── SOLO DATE SPOTS ─────────
+  { id: "saru-handroll",  name: "Saru Handroll Bar", category: "solo", lat: 37.7972, lng: -122.4219, note: "2206 Polk St — counter seats, walk-in only", addedAt: "2026-07-14" },
+  { id: "mensho-tokyo",   name: "Mensho Tokyo",      category: "solo", lat: 37.7866, lng: -122.4137, note: "676 Geary St — ramen counter", addedAt: "2026-07-14" },
+  { id: "bar-crenn-solo", name: "Bar Crenn",         category: "solo", lat: 37.7984, lng: -122.4368, note: "3131 Fillmore", addedAt: "2026-07-14" },
+  { id: "bodega-wine-bar",name: "Bodega",            category: "solo", lat: 37.8014, lng: -122.4128, note: "700 Columbus Ave — North Beach wine bar", addedAt: "2026-07-14" },
+  { id: "cheese-plus",    name: "Cheese Plus",       category: "solo", lat: 37.7953, lng: -122.4218, note: "2001 Polk St — corner of Polk & Pacific", addedAt: "2026-07-14" },
+  { id: "ruby-wine",      name: "Ruby Wine",         category: "solo", lat: 37.7626, lng: -122.3976, note: "1419 18th St — Potrero Hill natural wine", addedAt: "2026-07-14" },
+  { id: "rt-rotisserie",  name: "RT Rotisserie",     category: "solo", lat: 37.7752, lng: -122.4212, note: "101 Oak St — Hayes Valley", addedAt: "2026-07-14" },
   // <ADD_PLACES_HERE>  ← do not remove. `npm run add` inserts new entries above this line.
 ];
 
