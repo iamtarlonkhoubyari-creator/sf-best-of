@@ -215,6 +215,16 @@ export const PLACES: Place[] = [
   { id: "cheese-plus",    name: "Cheese Plus",       category: "solo", lat: 37.7953, lng: -122.4218, note: "2001 Polk St — corner of Polk & Pacific", addedAt: "2026-07-14" },
   { id: "ruby-wine",      name: "Ruby Wine",         category: "solo", lat: 37.7626, lng: -122.3976, note: "1419 18th St — Potrero Hill natural wine", addedAt: "2026-07-14" },
   { id: "rt-rotisserie",  name: "RT Rotisserie",     category: "solo", lat: 37.7752, lng: -122.4212, note: "101 Oak St — Hayes Valley", addedAt: "2026-07-14" },
+  { id: "house-of-prime-rib", name: "House of Prime Rib", category: "solo", lat: 37.7938, lng: -122.4234, note: "1906 Van Ness Ave", addedAt: "2026-07-14" },
+  { id: "palmers",        name: "Palmer's Tavern",   category: "solo", lat: 37.7897, lng: -122.4344, note: "2298 Fillmore St", addedAt: "2026-07-14" },
+  { id: "golden-gate-park-solo", name: "Golden Gate Park", category: "solo", lat: 37.7694, lng: -122.4862, addedAt: "2026-07-14" },
+  { id: "alamo-square-solo", name: "Alamo Square Park", category: "solo", lat: 37.7764, lng: -122.4347, addedAt: "2026-07-14" },
+  { id: "conservatory-of-flowers", name: "Conservatory of Flowers", category: "solo", lat: 37.7725, lng: -122.4602, note: "100 JFK Dr — Golden Gate Park", addedAt: "2026-07-14" },
+  { id: "asian-art-museum", name: "Asian Art Museum", category: "solo", lat: 37.7802, lng: -122.4162, note: "200 Larkin St", addedAt: "2026-07-14" },
+  { id: "hamburguesa-bar", name: "Hamburguesa Bar",  category: "solo", lat: 37.7880, lng: -122.4005, note: "78 2nd St — SoMa", addedAt: "2026-07-14" },
+  { id: "verjus-solo",    name: "Verjus",            category: "solo", lat: 37.7960, lng: -122.4033, note: "528 Washington — wine bar", addedAt: "2026-07-14" },
+  { id: "twenty-spot",    name: "20 Spot",           category: "solo", lat: 37.7586, lng: -122.4203, note: "3565 20th St — Mission wine bar", addedAt: "2026-07-14" },
+  { id: "golden-sardine", name: "Golden Sardine",    category: "solo", lat: 37.7986, lng: -122.4075, note: "362 Columbus Ave — North Beach", addedAt: "2026-07-14" },
   // <ADD_PLACES_HERE>  ← do not remove. `npm run add` inserts new entries above this line.
 ];
 
