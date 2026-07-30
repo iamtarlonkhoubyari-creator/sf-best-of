@@ -231,6 +231,21 @@ export const PLACES: Place[] = [
   { id: "verjus-solo",    name: "Verjus",            category: "solo", lat: 37.7960, lng: -122.4033, note: "528 Washington — wine bar", addedAt: "2026-07-14" },
   { id: "twenty-spot",    name: "20 Spot",           category: "solo", lat: 37.7586, lng: -122.4203, note: "3565 20th St — Mission wine bar", addedAt: "2026-07-14" },
   { id: "golden-sardine", name: "Golden Sardine",    category: "solo", lat: 37.7986, lng: -122.4075, note: "362 Columbus Ave — North Beach", addedAt: "2026-07-14" },
+  // ───────── PRIVATE DINING — actual private rooms ─────────
+  { id: "quince",         name: "Quince",            category: "dinner", lat: 37.7974, lng: -122.4033, note: "470 Pacific Ave — West Room, seats 16, above the wine cellar", addedAt: "2026-07-30" },
+  { id: "nisei",          name: "Nisei",             category: "dinner", lat: 37.7982, lng: -122.4220, note: "2316 Polk St — Kimono Room, 6–12 tasting / up to 20 custom", addedAt: "2026-07-30" },
+  { id: "liholiho",       name: "Liholiho Yacht Club", category: "dinner", lat: 37.7882, lng: -122.4146, note: "871 Sutter St — the old Gen-Gen Room downstairs, 10–20", addedAt: "2026-07-30" },
+  { id: "happy-crane",    name: "The Happy Crane",   category: "dinner", lat: 37.7775, lng: -122.4232, note: "451 Gough St — Silk Room, 12 seated", addedAt: "2026-07-30" },
+  { id: "nari",           name: "Nari",              category: "dinner", lat: 37.7854, lng: -122.4286, note: "1625 Post St — Wine Room (12) or Suda Room (24–40), Hotel Kabuki", addedAt: "2026-07-30" },
+  { id: "che-fico",       name: "Che Fico",          category: "dinner", lat: 37.7774, lng: -122.4380, note: "838 Divisadero — Celentano Room, 14–16", addedAt: "2026-07-30" },
+  { id: "spruce",         name: "Spruce",            category: "dinner", lat: 37.7877, lng: -122.4528, note: "3640 Sacramento St — several rooms, 12–40, custom menus", addedAt: "2026-07-30" },
+  { id: "ernest",         name: "Ernest",            category: "dinner", lat: 37.7632, lng: -122.4110, note: "1890 Bryant St — private room, 7–14 family style", addedAt: "2026-07-30" },
+  { id: "san-ho-won",     name: "San Ho Won",        category: "dinner", lat: 37.7596, lng: -122.4102, note: "2170 Bryant St — private room up to 16, set menu, 5:30 or 8:30", addedAt: "2026-07-30" },
+  { id: "wolfsbane",      name: "Wolfsbane",         category: "dinner", lat: 37.7581, lng: -122.3882, note: "2495 3rd St — The Den, 22 seated, ~7 courses", addedAt: "2026-07-30" },
+  { id: "arquet",         name: "Arquet",            category: "dinner", lat: 37.7955, lng: -122.3935, note: "1 Ferry Building — PDR seats 18, patio 48 with bridge views", addedAt: "2026-07-30" },
+  { id: "mister-jius",    name: "Mister Jiu's",      category: "dinner", lat: 37.7937, lng: -122.4067, note: "28 Waverly Pl — Double Happiness room, glass panels + velvet curtain", addedAt: "2026-07-30" },
+  { id: "moongate-lounge",name: "Moongate Lounge",   category: "dinner", lat: 37.7937, lng: -122.4067, note: "28 Waverly Pl — upstairs at Mister Jiu's, buyout 80–100", addedAt: "2026-07-30" },
+  { id: "roka-akor",      name: "Roka Akor",         category: "dinner", lat: 37.7965, lng: -122.4037, note: "801 Montgomery St — private room seats 18, robata + sushi", addedAt: "2026-07-30" },
   // <ADD_PLACES_HERE>  ← do not remove. `npm run add` inserts new entries above this line.
 ];
 
