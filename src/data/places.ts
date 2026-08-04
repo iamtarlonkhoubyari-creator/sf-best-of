@@ -251,7 +251,15 @@ export const PLACES: Place[] = [
   { id: "double-black",   name: "Double Black",      category: "cappuccinos", lat: 37.7654, lng: -122.4502, note: "925 Cole St — inside Yardsale, Cole Valley", addedAt: "2026-08-03" },
 { id: "side-characters",name: "Side Characters",   category: "cappuccinos", lat: 37.7973, lng: -122.4219, note: "2216 Polk St — records + coffee", addedAt: "2026-08-03" },
 { id: "sohn",           name: "SOHN",              category: "cappuccinos", lat: 37.7577, lng: -122.3884, note: "2535 3rd St — Korean-inspired café, Dogpatch", addedAt: "2026-08-03" },
-// <ADD_PLACES_HERE>  ← do not remove. `npm run add` inserts new entries above this line.
+  { id: "crissy-field-crash", name: "Crissy Field", category: "crash", lat: 37.8033, lng: -122.4658, addedAt: "2026-08-03" },
+  { id: "bar-part-time",    name: "Bar Part Time",   category: "crash", lat: 37.7681, lng: -122.4240, note: "496 14th St — natural wine + disco", needsReview: true, addedAt: "2026-08-03" },
+  { id: "the-midway",       name: "The Midway",      category: "crash", lat: 37.7482, lng: -122.3875, note: "900 Marin St — Dogpatch venue", needsReview: true, addedAt: "2026-08-03" },
+  { id: "celeste-solo",     name: "Céleste",         category: "solo", lat: 37.7970, lng: -122.4349, note: "2165 Union St", addedAt: "2026-08-03" },
+  { id: "amelie-solo",      name: "Amélie",          category: "solo", lat: 37.7932, lng: -122.4214, note: "1754 Polk St — wine bar", addedAt: "2026-08-03" },
+  { id: "ken-solo",         name: "Ken",             category: "solo", lat: 37.7715, lng: -122.4369, note: "252 Divisadero St — omakase counter", addedAt: "2026-08-03" },
+  { id: "horsefeather-solo",name: "Horsefeather",    category: "solo", lat: 37.7740, lng: -122.4374, note: "528 Divisadero", addedAt: "2026-08-03" },
+  { id: "key-klub-solo",    name: "Key Klub",        category: "solo", lat: 37.7901, lng: -122.4114, note: "850 Bush St", addedAt: "2026-08-03" },
+  // <ADD_PLACES_HERE>  ← do not remove. `npm run add` inserts new entries above this line.
 ];
 
 export const SF_CENTER: [number, number] = [37.7849, -122.4194];
