@@ -86,7 +86,7 @@ export default function Map({ visible, isNew, onSelect, flyTo = null }: Props) {
       zoomControl={false}
     >
       <TileLayer
-        url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+        url={"https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png" + (process.env.NEXT_PUBLIC_CARTO_API_KEY ? "?key=" + process.env.NEXT_PUBLIC_CARTO_API_KEY : "")}
         attribution='&copy; <a href="https://openstreetmap.org">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>'
       />
       <FlyController target={flyTo} />
