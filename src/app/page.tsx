@@ -142,31 +142,6 @@ export default function Home() {
   const [bannerVisible, setBannerVisible] = useState(false);
   const [bannerDismissed, setBannerDismissed] = useState(false);
   const [housingOpen, setHousingOpen] = useState(false);
-  const [feedbackOpen, setFeedbackOpen] = useState(false);
-  const [feedbackText, setFeedbackText] = useState("");
-  const [feedbackStatus, setFeedbackStatus] = useState<
-    "idle" | "sending" | "ok" | "error"
-  >("idle");
-
-  const submitFeedback = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const message = feedbackText.trim();
-    if (!message || feedbackStatus === "sending") return;
-    setFeedbackStatus("sending");
-    try {
-      const res = await fetch("/api/feedback", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message }),
-      });
-      if (!res.ok) throw new Error("send failed");
-      setFeedbackStatus("ok");
-      setFeedbackText("");
-    } catch {
-      setFeedbackStatus("error");
-    }
-  };
-
   const { isNew } = useNewSinceLastVisit();
 
   // rotate placeholder while empty
@@ -484,82 +459,7 @@ export default function Home() {
           />
         </section>
       </div>
-
-      {/* Floating feedback popup — top-right */}
-      <div className="fixed top-3 right-3 sm:top-5 sm:right-5 z-[2400] max-w-[88vw]">
-        {!feedbackOpen ? (
-          <button
-            onClick={() => setFeedbackOpen(true)}
-            className="feedback-chip inline-flex items-center gap-2 pl-3 pr-4 py-2.5 rounded-2xl bg-[var(--ink)] text-white shadow-[0_14px_30px_-8px_rgba(46,36,56,0.45)] hover:opacity-95 active:scale-[0.98] transition"
-            aria-label="open feedback"
-          >
-            <span className="text-lg leading-none feedback-wave">👋</span>
-            <span className="text-xs font-medium leading-tight whitespace-nowrap">
-              what lists do you want to see?
-            </span>
-          </button>
-        ) : (
-          <div className="feedback-popup bg-[var(--paper)] rounded-2xl shadow-[0_18px_40px_-8px_rgba(46,36,56,0.45)] border border-[var(--ink)]/10 p-4 w-[300px] max-w-full">
-            <div className="flex items-start justify-between gap-2 mb-2">
-              <div className="flex items-center gap-2">
-                <span className="text-base feedback-wave">👋</span>
-                <span className="font-display italic text-sm text-[var(--ink)] leading-tight">
-                  what lists do you want to see?
-                </span>
-              </div>
-              <button
-                onClick={() => {
-                  setFeedbackOpen(false);
-                  setFeedbackStatus("idle");
-                  setFeedbackText("");
-                }}
-                aria-label="close"
-                className="text-[var(--ink)]/40 hover:text-[var(--ink)] text-sm shrink-0 leading-none mt-0.5"
-              >
-                ✕
-              </button>
-            </div>
-            {feedbackStatus === "ok" ? (
-              <div className="text-sm italic text-[var(--ink)]/70 py-3 flex items-center gap-2">
-                <span className="text-lg">✨</span>
-                <span>thanks — got it</span>
-              </div>
-            ) : (
-              <form onSubmit={submitFeedback} className="space-y-2">
-                <textarea
-                  value={feedbackText}
-                  onChange={(e) => setFeedbackText(e.target.value)}
-                  placeholder="more bars in north beach? lists by neighborhood?"
-                  rows={3}
-                  maxLength={2000}
-                  autoFocus
-                  className="w-full text-sm bg-white border border-[var(--ink)]/15 rounded-lg p-2 focus:outline-none focus:border-[var(--ink)]/40 transition resize-none placeholder:text-[var(--ink)]/35 placeholder:italic"
-                />
-                <div className="flex items-center justify-between gap-2">
-                  <span className="text-[10px] opacity-50 italic">
-                    anonymous · no email
-                  </span>
-                  <button
-                    type="submit"
-                    disabled={
-                      !feedbackText.trim() || feedbackStatus === "sending"
-                    }
-                    className="text-[10px] uppercase tracking-[0.12em] font-semibold bg-[var(--ink)] text-white px-3 py-1.5 rounded-full hover:opacity-90 disabled:opacity-40 transition"
-                  >
-                    {feedbackStatus === "sending" ? "sending…" : "send →"}
-                  </button>
-                </div>
-                {feedbackStatus === "error" && (
-                  <p className="text-[10px] text-[var(--rose)] italic">
-                    didn&rsquo;t send — try again in a sec
-                  </p>
-                )}
-              </form>
-            )}
-          </div>
-        )}
-      </div>
-
+      
       {/* Command palette (⌘K) */}
       <CommandPalette
         open={paletteOpen}
