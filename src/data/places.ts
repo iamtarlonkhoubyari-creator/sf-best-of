@@ -259,7 +259,10 @@ export const PLACES: Place[] = [
   { id: "ken-solo",         name: "Ken",             category: "solo", lat: 37.7715, lng: -122.4369, note: "252 Divisadero St — omakase counter", addedAt: "2026-08-03" },
   { id: "horsefeather-solo",name: "Horsefeather",    category: "solo", lat: 37.7740, lng: -122.4374, note: "528 Divisadero", addedAt: "2026-08-03" },
   { id: "key-klub-solo",    name: "Key Klub",        category: "solo", lat: 37.7901, lng: -122.4114, note: "850 Bush St", addedAt: "2026-08-03" },
-  // <ADD_PLACES_HERE>  ← do not remove. `npm run add` inserts new entries above this line.
+  { id: "sydney-walton-square", name: "Sydney Walton Square", category: "sun", lat: 37.7982, lng: -122.3987, note: "Front & Jackson — Jackson Square pocket park", addedAt: "2026-09-08" },
+{ id: "tunnel-tops", name: "Presidio Tunnel Tops", category: "sun", lat: 37.8027, lng: -122.4573, note: "lawns + bay views above the tunnels", addedAt: "2026-09-08" },
+{ id: "presidio-lawn", name: "Presidio Main Parade Lawn", category: "sun", lat: 37.7989, lng: -122.4553, note: "Main Post lawn", addedAt: "2026-09-08" },
+// <ADD_PLACES_HERE>  ← do not remove. `npm run add` inserts new entries above this line.
 ];
 
 export const SF_CENTER: [number, number] = [37.7849, -122.4194];
