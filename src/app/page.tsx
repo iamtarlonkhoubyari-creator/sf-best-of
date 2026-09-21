@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { CATEGORIES, PLACES, type CategoryId, type Place } from "@/data/places";
 import BridgeIcon from "@/components/BridgeIcon";
 
@@ -186,7 +186,7 @@ function useNewSinceLastVisit() {
 function matchesQuery(p: Place, q: string): boolean {
   if (!q.trim()) return true;
   const cat = CATEGORIES.find((c) => c.id === p.category);
-  const haystack = `${p.name} ${p.note ?? ""} ${cat?.label ?? ""} ${cat?.longLabel ?? ""}`.toLowerCase();
+  const haystack = `${p.name} ${p.note ?? ""} ${p.address ?? ""} ${cat?.label ?? ""} ${cat?.longLabel ?? ""}`.toLowerCase();
   return haystack.includes(q.toLowerCase().trim());
 }
 
@@ -211,6 +211,15 @@ export default function Home() {
   const [housingOpen, setHousingOpen] = useState(false);
   const [vendorsOpen, setVendorsOpen] = useState(false);
   const { isNew } = useNewSinceLastVisit();
+  const mapSectionRef = useRef<HTMLElement | null>(null);
+
+  // on phones the map sits right under the header; when someone filters
+  // from the menu below it, bring the map back into view
+  const scrollToMapOnMobile = useCallback(() => {
+    if (typeof window === "undefined") return;
+    if (window.matchMedia("(min-width: 768px)").matches) return;
+    mapSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
 
   // rotate placeholder while empty
   useEffect(() => {
@@ -245,11 +254,13 @@ export default function Home() {
       }
       return new Set([id]);
     });
+    scrollToMapOnMobile();
   };
 
   const selectAll = () => {
     setShowNewOnly(false);
     setActive(new Set(CATEGORIES.map((c) => c.id)));
+    scrollToMapOnMobile();
   };
 
   const placeCounts = useMemo(() => {
@@ -305,6 +316,7 @@ export default function Home() {
       duration: 0.9,
       pulse: true,
     });
+    scrollToMapOnMobile();
   };
 
   const pickFromPalette = (place: Place) => {
@@ -316,6 +328,7 @@ export default function Home() {
       pulse: true,
     });
     setPaletteOpen(false);
+    scrollToMapOnMobile();
   };
 
   return (
@@ -354,7 +367,7 @@ export default function Home() {
 
       {/* Header */}
       <header className="px-4 pt-5 pb-4 sm:px-8 sm:pt-7 z-[1000]">
-        <BridgeIcon className="w-44 sm:w-56 h-auto -mb-2 -ml-1 -rotate-1" />
+        <BridgeIcon className="w-36 sm:w-56 h-auto -mb-2 -ml-1 -rotate-1" />
         <h1 className="font-display text-4xl sm:text-6xl leading-[1] font-semibold">
           <span className="accent-underline">best of SF</span>{" "}
           <span className="italic font-normal" style={{ color: "#708238" }}>
@@ -381,7 +394,7 @@ export default function Home() {
 
       {/* Body: sidebar + map */}
       <div className="flex-1 flex flex-col md:flex-row gap-3 md:gap-5 px-4 sm:px-8 pb-4 min-h-0">
-        <aside className="md:w-60 lg:w-72 shrink-0 z-[1000] md:overflow-y-auto md:max-h-full no-scrollbar md:pb-2">
+        <aside className="order-2 md:order-1 md:w-60 lg:w-72 shrink-0 z-[1000] md:overflow-y-auto md:max-h-full no-scrollbar md:pb-2">
           {/* Search input */}
           <div className="relative mb-1.5">
             <input
@@ -396,7 +409,7 @@ export default function Home() {
               aria-label="search places"
             />
             <kbd
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] font-mono bg-[var(--ink)]/10 text-[var(--ink)]/55 px-1.5 py-0.5 rounded"
+              className="hidden sm:block absolute right-2 top-1/2 -translate-y-1/2 text-[9px] font-mono bg-[var(--ink)]/10 text-[var(--ink)]/55 px-1.5 py-0.5 rounded"
               title="open the command palette"
             >
               ⌘K
@@ -572,7 +585,10 @@ export default function Home() {
 
         </aside>
 
-        <section className="relative flex-1 min-h-[60vh] md:min-h-0 rounded-3xl overflow-hidden border-2 border-[var(--ink)]/10 shadow-[0_10px_40px_-10px_rgba(46,36,56,0.25)]">
+        <section
+          ref={mapSectionRef}
+          className="order-1 md:order-2 relative flex-1 min-h-[55vh] md:min-h-0 scroll-mt-3 rounded-3xl overflow-hidden border-2 border-[var(--ink)]/10 shadow-[0_10px_40px_-10px_rgba(46,36,56,0.25)]"
+        >
           <Map
             visible={visiblePlaces}
             isNew={isNew}
@@ -767,7 +783,7 @@ function CommandPalette({
                         </span>
                         <span className="text-xs opacity-60 truncate block">
                           {cat.label}
-                          {p.note ? ` · ${p.note}` : ""}
+                          {p.note ? ` · ${p.note}` : p.address ? ` · ${p.address}` : ""}
                         </span>
                       </span>
                     </button>
@@ -799,7 +815,7 @@ function DetailSheet({
 }) {
   const cat = CATEGORIES.find((c) => c.id === place.category)!;
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-    place.name + " San Francisco",
+    `${place.name} ${place.address ?? ""} San Francisco`.replace(/\s+/g, " "),
   )}`;
   return (
     <div
@@ -833,6 +849,11 @@ function DetailSheet({
             </h2>
             {place.note && (
               <p className="text-sm opacity-80 mt-1">{place.note}</p>
+            )}
+            {place.address && (
+              <p className="text-[11px] font-mono opacity-50 mt-1">
+                {place.address}
+              </p>
             )}
           </div>
           <button

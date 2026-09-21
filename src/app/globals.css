@@ -95,6 +95,41 @@ body {
   transform: rotate(-45deg) scale(1.12);
 }
 
+/* cluster bubble — groups of nearby pins at low zoom */
+.cluster-pin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  box-shadow: 0 4px 12px rgba(46, 36, 56, 0.28);
+  cursor: pointer;
+  transition: transform 120ms ease;
+}
+.cluster-pin:hover {
+  transform: scale(1.08);
+}
+.cluster-count {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1;
+  color: var(--ink);
+}
+.cluster-dots {
+  display: flex;
+  gap: 2px;
+}
+.cluster-dots i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: block;
+}
+
 /* gentle wobble */
 @keyframes wobble {
   0%,100% { transform: rotate(-2deg); }
