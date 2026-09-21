@@ -90,6 +90,48 @@ const VENDOR_LINKS: {
     description:
       "Catering marketplace for offices and events. Order from basically any restaurant, delivered on time.",
   },
+  {
+    label: "space cadet baking co",
+    href: "https://www.spacecadetbakingco.com/",
+    tag: "custom cookies",
+    description:
+      "Custom logo cookies for events, launches, and client gifting. Tell them I sent you.",
+  },
+  {
+    label: "the culinistas",
+    href: "https://www.theculinistas.com/",
+    tag: "private chefs",
+    description:
+      "Private chefs for dinner parties and intimate events. The move when you want better than catering.",
+  },
+  {
+    label: "quality beverage co",
+    href: "https://www.qualitybeveragesf.com/",
+    tag: "bar catering",
+    description:
+      "Fully-licensed beverage catering all over the Bay — happy hours, weddings, offsites. Tell them I sent you.",
+  },
+  {
+    label: "the liquid caterers",
+    href: "https://www.theliquidcaterers.com/",
+    tag: "mobile bar",
+    description:
+      "Mobile bartending with real bartenders — fresh-squeezed juice, homemade syrups, custom cocktail menus.",
+  },
+  {
+    label: "on the roll catering",
+    href: "https://www.ontherollcatering.com/",
+    tag: "catering",
+    description:
+      "Full-service catering, bar service, and rentals for corporate events and weddings. SF-based since 2009.",
+  },
+  {
+    label: "shani zhang",
+    href: "https://www.shanizhang.com/",
+    tag: "live painting",
+    description:
+      "Live event painting — she captures your event on canvas while it happens. Unreal party trick.",
+  },
 ];
 
 const PLACEHOLDERS = [
