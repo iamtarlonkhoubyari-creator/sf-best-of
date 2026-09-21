@@ -67,6 +67,31 @@ const HOUSING_LINKS: {
   },
 ];
 
+const VENDORS_INTRO =
+  "the vendors i keep coming back to for events. referral links — i may get a kickback.";
+
+const VENDOR_LINKS: {
+  label: string;
+  href: string;
+  tag: string;
+  description: string;
+}[] = [
+  {
+    label: "tapstitch",
+    href: "https://affiliate.tapstitch.com/jjcyfa7xcat2",
+    tag: "swag",
+    description:
+      "Print-on-demand custom merch — tees, hoodies, hats. What we use for event swag.",
+  },
+  {
+    label: "ezcater",
+    href: "https://www.ezcater.com/raf/8766adcbf0",
+    tag: "catering",
+    description:
+      "Catering marketplace for offices and events. Order from basically any restaurant, delivered on time.",
+  },
+];
+
 const PLACEHOLDERS = [
   "search…",
   "try \"horsefeather\"",
@@ -142,6 +167,7 @@ export default function Home() {
   const [bannerVisible, setBannerVisible] = useState(false);
   const [bannerDismissed, setBannerDismissed] = useState(false);
   const [housingOpen, setHousingOpen] = useState(false);
+  const [vendorsOpen, setVendorsOpen] = useState(false);
   const { isNew } = useNewSinceLastVisit();
 
   // rotate placeholder while empty
@@ -438,6 +464,60 @@ export default function Home() {
                           fb group
                         </span>
                       )}
+                    </div>
+                    <p className="text-[11px] text-[var(--ink)]/60 leading-snug">
+                      {link.description}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Vendors — referral links, collapsible */}
+          <div className="mt-4 pt-4 border-t border-[var(--ink)]/10">
+            <button
+              onClick={() => setVendorsOpen((o) => !o)}
+              className="housing-toggle w-full flex items-center justify-between gap-2 px-2.5 py-2 -mx-2 rounded-xl bg-[var(--ink)]/5 hover:bg-[var(--ink)]/10 active:scale-[0.99] transition group"
+              aria-expanded={vendorsOpen}
+            >
+              <h3 className="font-display italic text-sm text-[var(--ink)] group-hover:translate-x-0.5 transition">
+                vendors i actually use
+              </h3>
+              <span className="flex items-center gap-2">
+                <span className="text-[10px] uppercase tracking-[0.14em] text-[var(--ink)]/55 font-semibold">
+                  {vendorsOpen ? "hide" : `show ${VENDOR_LINKS.length}`}
+                </span>
+                <span
+                  className={`text-[11px] grid place-items-center w-5 h-5 rounded-full bg-[var(--ink)] text-white transition-transform duration-300 ${vendorsOpen ? "rotate-180" : ""}`}
+                  aria-hidden
+                >
+                  ▾
+                </span>
+              </span>
+            </button>
+            <div className={`housing-list mt-2 ${vendorsOpen ? "is-open" : ""}`}>
+              <p className="text-[11px] text-[var(--ink)]/65 italic mb-3 leading-snug px-1">
+                {VENDORS_INTRO}
+              </p>
+              <ul className="space-y-3">
+                {VENDOR_LINKS.map((link) => (
+                  <li key={link.label} className="housing-card">
+                    <div className="flex items-baseline justify-between gap-2 mb-0.5">
+                      <span className="font-display italic text-base text-[var(--ink)] leading-tight">
+                        {link.label}
+                        <span className="ml-1.5 text-[9px] not-italic font-sans uppercase tracking-[0.12em] text-[var(--ink)]/40">
+                          {link.tag}
+                        </span>
+                      </span>
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="housing-visit text-[10px] uppercase tracking-[0.12em] font-semibold text-[var(--ink)]/55 hover:text-[var(--ink)] transition shrink-0"
+                      >
+                        visit ↗
+                      </a>
                     </div>
                     <p className="text-[11px] text-[var(--ink)]/60 leading-snug">
                       {link.description}
