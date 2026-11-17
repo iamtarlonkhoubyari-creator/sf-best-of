@@ -51,6 +51,12 @@ const HOUSING_LINKS: {
       "Loud and chaotic, but you'll find the occasional gem if you check daily.",
   },
   {
+    label: "hotpads.com",
+    href: "https://hotpads.com",
+    description:
+      "Map-based rental search — filter by price, beds, and neighborhood to see what's out there at a glance.",
+  },
+  {
     label: "SF Crew",
     description:
       "Classic SF community group — listings + roommate requests. Find on Facebook.",
