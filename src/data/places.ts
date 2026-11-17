@@ -261,6 +261,20 @@ export const PLACES: Place[] = [
   { id: "sydney-walton-square", name: "Sydney Walton Square", category: "sun", lat: 37.7982, lng: -122.3987, note: "Front & Jackson — Jackson Square pocket park", addedAt: "2026-09-08" },
 { id: "tunnel-tops", name: "Presidio Tunnel Tops", category: "sun", lat: 37.8027, lng: -122.4573, note: "lawns + bay views above the tunnels", addedAt: "2026-09-08" },
 { id: "presidio-lawn", name: "Presidio Main Parade Lawn", category: "sun", lat: 37.7989, lng: -122.4553, note: "Main Post lawn", addedAt: "2026-09-08" },
+  // ───────── NEW (nov 2026) ─────────
+  { id: "rampant",         name: "Rampant Bottle + Bar", category: "bars", lat: 37.7757, lng: -122.4975, address: "3516 Balboa St", note: "Outer Richmond natural wine", needsReview: true, addedAt: "2026-11-17" },
+  { id: "rampant-crash",   name: "Rampant Bottle + Bar", category: "crash", lat: 37.7757, lng: -122.4975, address: "3516 Balboa St", note: "closed Tuesdays", needsReview: true, addedAt: "2026-11-17" },
+  { id: "jilli",           name: "Jilli",               category: "bars", lat: 37.7599, lng: -122.4148, note: "Mission sool jib — makgeolli + Korean bar food", needsReview: true, addedAt: "2026-11-17" },
+  { id: "frankies",  name: "Frankie's",           category: "bars", lat: 37.7849, lng: -122.4194, note: "martini bar on Pierce St — baked oysters, mortadella sandwiches", needsReview: true, addedAt: "2026-11-17" },
+  { id: "the-wild-fox",    name: "The Wild Fox",        category: "cappuccinos", lat: 37.7898, lng: -122.3963, note: "Japanese-inspired café, FiDi, next to the consulate", needsReview: true, addedAt: "2026-11-17" },
+  { id: "spro-spear",      name: "SPRO Coffee Lab",     category: "cappuccinos", lat: 37.7911, lng: -122.3923, address: "201 Spear St", note: "new FiDi café", needsReview: true, addedAt: "2026-11-17" },
+  { id: "golden-sardine-cry", name: "Golden Sardine",   category: "cry", lat: 37.7986, lng: -122.4075, address: "362 Columbus Ave", note: "mini-library wine bar, quiet corners", addedAt: "2026-11-17" },
+  { id: "big-four",        name: "The Big Four",        category: "crash", lat: 37.7915, lng: -122.4125, address: "1075 California St", note: "Nob Hill hotel bar", needsReview: true, addedAt: "2026-11-17" },
+  { id: "esme",            name: "Esmé",                category: "bars", lat: 37.7719, lng: -122.4372, address: "311 Divisadero St", note: "wine bar", needsReview: true, addedAt: "2026-11-17" },
+  { id: "rose-pizzeria",   name: "Rose Pizzeria",       category: "solo", lat: 37.7829, lng: -122.4590, address: "1 Clement St", note: "Inner Richmond, first SF location — also a date spot", needsReview: true, addedAt: "2026-11-17" },
+  { id: "the-laundromat",  name: "The Laundromat",      category: "solo", lat: 37.7757, lng: -122.5012, address: "3725 Balboa St", note: "Outer Richmond — also a date spot", needsReview: true, addedAt: "2026-11-17" },
+  { id: "side-a-solo",    name: "Side A",              category: "solo", lat: 37.7607, lng: -122.4117, address: "2814 19th St", note: "Mission — also a date spot", addedAt: "2026-11-17" },
+  { id: "joujou",         name: "JouJou",              category: "solo", lat: 37.7684, lng: -122.4129, address: "65 Division St", note: "glamorous French — solo bar seat or date night", needsReview: true, addedAt: "2026-11-17" },
 // <ADD_PLACES_HERE>  ← do not remove. `npm run add` inserts new entries above this line.
 ];
 
