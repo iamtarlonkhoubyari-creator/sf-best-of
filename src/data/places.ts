@@ -275,6 +275,7 @@ export const PLACES: Place[] = [
   { id: "the-laundromat",  name: "The Laundromat",      category: "solo", lat: 37.7755, lng: -122.4989, address: "3725 Balboa St", note: "Outer Richmond — also a date spot", addedAt: "2026-11-17" },
   { id: "side-a-solo",    name: "Side A",              category: "solo", lat: 37.7607, lng: -122.4117, address: "2814 19th St", note: "Mission — also a date spot", addedAt: "2026-11-17" },
   { id: "joujou",         name: "JouJou",              category: "solo", lat: 37.7697, lng: -122.4038, address: "65 Division St", note: "glamorous French — solo bar seat or date night", addedAt: "2026-11-17" },
+  { id: "verve-wine-fillmore", name: "Verve Wine",         category: "bars", lat: 37.7913, lng: -122.4342, address: "2358 Fillmore St", note: "wine shop + bar on Fillmore", addedAt: "2026-11-17" },
 // <ADD_PLACES_HERE>  ← do not remove. `npm run add` inserts new entries above this line.
 ];
 
